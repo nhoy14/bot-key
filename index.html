@@ -1,0 +1,2689 @@
+<!DOCTYPE html>
+<html lang="km">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SMC KH Academy - Khmer Trading School</title>
+  
+  <!-- CDNs for Tailwind CSS, Lucide Icons, and Chart.js -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://cdn.jsdelivr.net/npm/lucide@latest/dist/umd/lucide.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  
+  <!-- Link to External Stylesheet -->
+  <link rel="stylesheet" href="style.css">
+  <script>
+    // Tailwind Config
+    if (typeof tailwind !== 'undefined') {
+      tailwind.config = {
+        theme: {
+          extend: {
+            colors: {
+              primary: '#FFD700',
+              bg: '#0B0B0B',
+              card: '#161616',
+              secondary: '#202020',
+              accent: '#FFB800',
+              grayCustom: '#9CA3AF'
+            },
+            borderRadius: {
+              '2xl': '20px',
+            }
+          }
+        }
+      }
+    }
+  </script>
+</head>
+<body class="bg-[#0B0B0B] text-white min-h-screen flex flex-col font-sans">
+
+  <!-- Top Navigation Bar -->
+  <nav class="glass-panel sticky top-0 z-50 px-6 py-4 flex items-center justify-between border-b border-white/5">
+    <div class="flex items-center gap-3 cursor-pointer" onclick="switchView('landing')">
+      <div class="w-9 h-9 bg-gradient-to-br from-primary to-accent rounded-xl flex items-center justify-center text-black font-extrabold text-lg shadow-[0_0_15px_rgba(255,215,0,0.3)] animate-float">
+        🪙
+      </div>
+      <span class="text-xl font-black tracking-wider text-gold-gradient font-mono">SMC KH ACADEMY</span>
+    </div>
+
+    <!-- Desktop Navigation Menu Links -->
+    <div class="hidden lg:flex items-center gap-1 xl:gap-2 text-sm font-semibold text-gray-300">
+      <button onclick="switchView('landing')" id="nav-landing" class="px-3 py-2 rounded-lg hover:text-primary transition-all active-tab">Home</button>
+      <button onclick="switchView('courses')" id="nav-courses" class="px-3 py-2 rounded-lg hover:text-primary transition-all">Courses</button>
+      <button onclick="switchView('lessons')" id="nav-lessons" class="px-3 py-2 rounded-lg hover:text-primary transition-all">Lessons</button>
+      <button onclick="switchView('quiz')" id="nav-quiz" class="px-3 py-2 rounded-lg hover:text-primary transition-all">Quiz</button>
+      <button onclick="switchView('tools')" id="nav-tools" class="px-3 py-2 rounded-lg hover:text-primary transition-all">Trading Tools</button>
+      <button onclick="switchView('dashboard')" id="nav-dashboard" class="px-3 py-2 rounded-lg hover:text-primary transition-all">Dashboard</button>
+      <button onclick="switchView('admin')" id="nav-admin" class="px-3 py-2 rounded-lg hover:text-primary transition-all">Admin Panel</button>
+      <button onclick="switchView('community')" id="nav-community" class="px-3 py-2 rounded-lg hover:text-primary transition-all">Community</button>
+      <button onclick="switchView('blog')" id="nav-blog" class="px-3 py-2 rounded-lg hover:text-primary transition-all">Blog</button>
+      <button onclick="switchView('downloads')" id="nav-downloads" class="px-3 py-2 rounded-lg hover:text-primary transition-all">Downloads</button>
+    </div>
+
+    <!-- Right-side actions -->
+    <div class="flex items-center gap-3">
+      <!-- Chatbot Bubble Toggle -->
+      <button onclick="toggleChatbot()" class="relative p-2 rounded-xl bg-white/5 border border-white/10 hover:border-primary/30 transition-all">
+        <i data-lucide="message-square" class="w-5 h-5 text-primary"></i>
+        <span class="absolute top-0 right-0 w-2 h-2 bg-accent rounded-full animate-ping"></span>
+      </button>
+      
+      <!-- Notifications -->
+      <button onclick="showToast('មិនទាន់មានការជូនដំណឹងថ្មីទេ')" class="p-2 rounded-xl bg-white/5 border border-white/10 hover:border-primary/30 transition-all">
+        <i data-lucide="bell" class="w-5 h-5 text-gray-400"></i>
+      </button>
+
+      <!-- Profile Menu -->
+      <div class="flex items-center gap-2 pl-2 border-l border-white/10">
+        <div onclick="switchView('dashboard')" class="w-8 h-8 rounded-full bg-gradient-to-br from-primary to-accent text-black font-bold flex items-center justify-center cursor-pointer text-xs shadow-[0_0_10px_rgba(255,215,0,0.2)]">
+          KH
+        </div>
+        <span class="hidden md:inline text-xs font-semibold text-gray-400" id="user-display-name">សិស្សជួញដូរ</span>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Main Viewports Container -->
+  <main class="flex-grow flex flex-col relative w-full overflow-x-hidden">
+    
+    <!-- ========================================== -->
+    <!-- 1. LANDING PAGE VIEW                       -->
+    <!-- ========================================== -->
+    <section id="view-landing" class="view-panel w-full max-w-7xl mx-auto px-6 py-12 flex flex-col gap-16">
+      
+      <!-- Large Hero Section -->
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+        <div class="lg:col-span-7 flex flex-col gap-6 text-left">
+          <div class="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-primary/10 border border-primary/20 text-xs font-semibold text-primary w-fit">
+            ⚡ វិទ្យាស្ថានសិក្សា SMC/ICT ដំបូងគេនៅកម្ពុជា
+          </div>
+          <h1 class="text-4xl md:text-6xl font-black leading-tight tracking-tight">
+            រៀន Trading <br class="hidden md:block">
+            <span class="text-gold-gradient">ជាភាសាខ្មែរ ១០០%</span>
+          </h1>
+          <p class="text-lg md:text-xl text-gray-400 font-medium">
+            Become a Professional XAUUSD & Forex Trader. ស្វែងយល់ពីយុទ្ធសាស្ត្រ Smart Money Concepts (SMC) និង Inner Circle Trader (ICT) ដើម្បីយកឈ្នះទីផ្សារហិរញ្ញវត្ថុដោយជឿជាក់។
+          </p>
+          <div class="flex flex-wrap items-center gap-4 mt-2">
+            <button onclick="switchView('lessons')" class="px-8 py-4 bg-gradient-to-r from-primary to-accent hover:from-accent hover:to-primary text-black font-extrabold rounded-xl transition-all shadow-[0_4px_20px_rgba(255,215,0,0.3)] hover:scale-105 active:scale-95 flex items-center gap-2">
+              ចាប់ផ្តើមរៀនឥឡូវនេះ <i data-lucide="play" class="w-4 h-4 fill-black"></i>
+            </button>
+            <button onclick="switchView('courses')" class="px-8 py-4 bg-white/5 border border-white/10 hover:border-primary/30 text-white font-bold rounded-xl transition-all hover:bg-white/10 flex items-center gap-2">
+              មើលវគ្គសិក្សាទាំងអស់ <i data-lucide="book-open" class="w-4 h-4"></i>
+            </button>
+          </div>
+          
+          <!-- Trust Badges -->
+          <div class="mt-4 pt-6 border-t border-white/5 flex flex-col gap-3">
+            <span class="text-xs font-bold text-gray-500 uppercase tracking-widest">Trusted by Khmer Traders</span>
+            <div class="flex flex-wrap items-center gap-6 text-gray-400 font-bold text-sm">
+              <span class="flex items-center gap-1.5"><i data-lucide="shield-check" class="w-4 h-4 text-primary"></i> គុណភាពខ្ពស់</span>
+              <span class="flex items-center gap-1.5"><i data-lucide="users-round" class="w-4 h-4 text-primary"></i> ជំនួយ ២៤/៧</span>
+              <span class="flex items-center gap-1.5"><i data-lucide="sparkles" class="w-4 h-4 text-primary"></i> យុទ្ធសាស្ត្រស្ថាប័នធំ</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Hero Right: Floating Interactive Chart Card -->
+        <div class="lg:col-span-5 relative w-full h-[360px] md:h-[420px] rounded-2xl overflow-hidden glass-card p-6 flex flex-col gap-4 shadow-[0_10px_40px_rgba(0,0,0,0.6)]">
+          <div class="absolute inset-0 bg-gradient-to-tr from-primary/5 via-transparent to-blue-500/5 pointer-events-none"></div>
+          <div class="flex items-center justify-between border-b border-white/5 pb-3">
+            <div class="flex items-center gap-2.5">
+              <div class="w-8 h-8 rounded-lg bg-yellow-500/20 text-yellow-500 flex items-center justify-center font-bold text-xs">Au</div>
+              <div>
+                <span class="block text-xs font-bold text-gray-400">GOLD / U.S. DOLLAR</span>
+                <span class="text-sm font-black text-white">XAUUSD, 1H</span>
+              </div>
+            </div>
+            <span class="px-2 py-1 bg-green-500/10 text-green-400 rounded-md text-[10px] font-bold tracking-wider">LIVE DATA</span>
+          </div>
+
+          <!-- Mini Graph -->
+          <div class="flex-grow flex items-end gap-1.5 pb-4">
+            <div class="w-full h-3/4 bg-red-500/10 border-t-2 border-red-500 rounded-lg flex items-center justify-center text-[10px] font-black text-red-400">SELL ZONE</div>
+            <div class="w-full h-full bg-green-500/10 border-t-2 border-green-500 rounded-lg flex items-end justify-center pb-2 text-[10px] font-black text-green-400">BUY ENTRY (OB)</div>
+          </div>
+
+          <div class="flex items-center justify-between pt-2 border-t border-white/5 text-xs text-gray-400">
+            <span>Market Price: <strong class="text-white">$2,382.45</strong></span>
+            <span class="text-green-400 font-bold flex items-center gap-0.5"><i data-lucide="trending-up" class="w-3.5 h-3.5"></i> +1.24%</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Quick Statistics Grid -->
+      <div class="grid grid-cols-2 md:grid-cols-4 gap-6">
+        <div class="glass-card p-6 rounded-2xl text-center flex flex-col gap-1">
+          <span class="text-3xl md:text-4xl font-extrabold text-gold-gradient">20+</span>
+          <span class="text-xs font-bold text-gray-400 uppercase tracking-wider">Courses (វគ្គសិក្សា)</span>
+        </div>
+        <div class="glass-card p-6 rounded-2xl text-center flex flex-col gap-1">
+          <span class="text-3xl md:text-4xl font-extrabold text-gold-gradient">300+</span>
+          <span class="text-xs font-bold text-gray-400 uppercase tracking-wider">Lessons (មេរៀន)</span>
+        </div>
+        <div class="glass-card p-6 rounded-2xl text-center flex flex-col gap-1">
+          <span class="text-3xl md:text-4xl font-extrabold text-gold-gradient">100+</span>
+          <span class="text-xs font-bold text-gray-400 uppercase tracking-wider">Videos (វីដេអូ)</span>
+        </div>
+        <div class="glass-card p-6 rounded-2xl text-center flex flex-col gap-1">
+          <span class="text-3xl md:text-4xl font-extrabold text-gold-gradient">10,000+</span>
+          <span class="text-xs font-bold text-gray-400 uppercase tracking-wider">Students (សិស្សជោគជ័យ)</span>
+        </div>
+      </div>
+
+      <!-- Featured Courses highlights -->
+      <div class="flex flex-col gap-8">
+        <div class="flex items-end justify-between border-b border-white/5 pb-4">
+          <div>
+            <h2 class="text-2xl md:text-3xl font-extrabold">វគ្គសិក្សាពេញនិយម (Featured Courses)</h2>
+            <p class="text-sm text-gray-400 mt-1">ចាប់ផ្តើមរៀនពីមូលដ្ឋានគ្រឹះ រហូតដល់កម្រិតវិភាគស្ថាប័នធំ</p>
+          </div>
+          <button onclick="switchView('courses')" class="text-sm font-bold text-primary hover:underline flex items-center gap-1">
+            មើលទាំងអស់ <i data-lucide="chevron-right" class="w-4 h-4"></i>
+          </button>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6" id="landing-courses-grid">
+          <!-- Dynamically populated course cards -->
+        </div>
+      </div>
+      
+    </section>
+
+    <!-- ========================================== -->
+    <!-- 2. COURSES / DETAILS VIEW                 -->
+    <!-- ========================================== -->
+    <section id="view-courses" class="view-panel hidden w-full max-w-7xl mx-auto px-6 py-12 flex flex-col gap-10">
+      <div>
+        <h1 class="text-3xl font-black text-gold-gradient">វគ្គសិក្សាជំនាញ Trading ទាំងអស់</h1>
+        <p class="text-sm text-gray-400 mt-1">ជ្រើសរើសវគ្គសិក្សាដែលសមស្របទៅនឹងកម្រិតជំនាញរបស់អ្នក</p>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8" id="courses-list-grid">
+        <!-- Dynamically injected course listings -->
+      </div>
+
+      <!-- Modal for Course Details -->
+      <div id="course-detail-modal" class="fixed inset-0 z-50 hidden flex items-center justify-center p-4 bg-black/80 backdrop-blur-sm">
+        <div class="w-full max-w-3xl glass-card rounded-2xl overflow-hidden max-h-[90vh] flex flex-col shadow-[0_10px_50px_rgba(0,0,0,0.8)]">
+          <div class="relative h-48 w-full bg-cover bg-center" id="modal-course-banner">
+            <div class="absolute inset-0 bg-gradient-to-t from-[#161616] via-black/40 to-transparent"></div>
+            <button onclick="closeCourseModal()" class="absolute top-4 right-4 p-2 rounded-lg bg-black/60 hover:bg-black/80 text-white transition-all">
+              <i data-lucide="x" class="w-5 h-5"></i>
+            </button>
+            <div class="absolute bottom-4 left-6 flex flex-col gap-1">
+              <span class="px-2 py-0.5 bg-primary/20 text-primary border border-primary/30 text-[10px] font-bold tracking-wider rounded w-fit uppercase" id="modal-course-badge">BASIC</span>
+              <h2 class="text-2xl font-black text-white" id="modal-course-title">Course Title</h2>
+            </div>
+          </div>
+
+          <div class="p-6 overflow-y-auto flex-grow flex flex-col gap-6 text-left">
+            <div>
+              <h3 class="text-sm font-bold text-gray-400 uppercase tracking-widest mb-2">ទិដ្ឋភាពទូទៅនៃវគ្គសិក្សា / Course Overview</h3>
+              <p class="text-sm text-gray-300 leading-relaxed" id="modal-course-desc">Course detailed description will go here...</p>
+            </div>
+
+            <div class="grid grid-cols-3 gap-4 border-y border-white/5 py-4 text-center">
+              <div>
+                <span class="block text-[10px] font-bold text-gray-500 uppercase">Duration</span>
+                <span class="text-sm font-bold text-white mt-0.5" id="modal-course-duration">10 Hours</span>
+              </div>
+              <div>
+                <span class="block text-[10px] font-bold text-gray-500 uppercase">Rating</span>
+                <span class="text-sm font-bold text-primary mt-0.5" id="modal-course-rating">★ 4.9</span>
+              </div>
+              <div>
+                <span class="block text-[10px] font-bold text-gray-500 uppercase">Instructor</span>
+                <span class="text-sm font-bold text-white mt-0.5">SMC KH Coach</span>
+              </div>
+            </div>
+
+            <div>
+              <h3 class="text-sm font-bold text-gray-400 uppercase tracking-widest mb-3">មាតិកាមេរៀន / Curriculum Preview</h3>
+              <div class="flex flex-col gap-2.5" id="modal-course-curriculum">
+                <!-- Curriculum lessons listed here -->
+              </div>
+            </div>
+          </div>
+
+          <div class="p-4 bg-white/2 flex items-center justify-between border-t border-white/5">
+            <span class="text-lg font-black text-primary" id="modal-course-price">FREE</span>
+            <button onclick="startCourseFromModal()" class="px-6 py-3 bg-gradient-to-r from-primary to-accent hover:from-accent hover:to-primary text-black font-extrabold rounded-xl transition-all flex items-center gap-2">
+              ចូលរៀនឥឡូវនេះ <i data-lucide="chevron-right" class="w-4.5 h-4.5"></i>
+            </button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ========================================== -->
+    <!-- 3. LESSONS SYSTEM VIEW                     -->
+    <!-- ========================================== -->
+    <section id="view-lessons" class="view-panel hidden flex-grow flex overflow-hidden w-full h-[calc(100vh-80px)]">
+      
+      <!-- Left sidebar listing 25 modules -->
+      <aside class="w-80 border-r border-white/5 bg-[#121212] flex flex-col flex-shrink-0 h-full">
+        <div class="p-4 border-b border-white/5 flex flex-col gap-3">
+          <!-- Search input -->
+          <div class="relative">
+            <i data-lucide="search" class="absolute left-3 top-3 w-4 h-4 text-gray-500"></i>
+            <input type="text" id="lesson-search" oninput="filterLessons()" class="w-full pl-9 pr-4 py-2 rounded-xl bg-black/40 border border-white/5 focus:border-primary/40 text-xs text-white outline-none placeholder-gray-500" placeholder="ស្វែងរកមេរៀន...">
+          </div>
+          
+          <!-- Category pills -->
+          <div class="flex gap-1.5 overflow-x-auto pb-1">
+            <button onclick="filterCategory('all')" id="cat-all" class="px-2.5 py-1 rounded-full bg-primary/10 border border-primary/20 text-[10px] font-bold text-primary whitespace-nowrap">ទាំងអស់</button>
+            <button onclick="filterCategory('basic')" id="cat-basic" class="px-2.5 py-1 rounded-full bg-white/5 border border-white/5 text-[10px] font-bold text-gray-400 whitespace-nowrap">Basic</button>
+            <button onclick="filterCategory('smc')" id="cat-smc" class="px-2.5 py-1 rounded-full bg-white/5 border border-white/5 text-[10px] font-bold text-gray-400 whitespace-nowrap">SMC & ICT</button>
+            <button onclick="filterCategory('risk')" id="cat-risk" class="px-2.5 py-1 rounded-full bg-white/5 border border-white/5 text-[10px] font-bold text-gray-400 whitespace-nowrap">Risk/Psych</button>
+          </div>
+        </div>
+
+        <!-- Lessons listing tree -->
+        <div class="flex-grow overflow-y-auto p-3 flex flex-col gap-1.5" id="lessons-list-tree">
+          <!-- Dynamic rendering of 25 lesson item buttons -->
+        </div>
+      </aside>
+
+      <!-- Right lesson viewer content -->
+      <div class="flex-grow overflow-y-auto p-8 flex justify-center bg-[#0d0d0d] h-full">
+        <div class="w-full max-w-3xl flex flex-col gap-8 pb-16 text-left" id="lesson-viewer-body">
+          <!-- Selected lesson injected here -->
+        </div>
+      </div>
+    </section>
+
+    <!-- ========================================== -->
+    <!-- 4. QUIZ VIEW                               -->
+    <!-- ========================================== -->
+    <section id="view-quiz" class="view-panel hidden w-full max-w-3xl mx-auto px-6 py-12 flex flex-col gap-8">
+      <div class="flex items-center justify-between border-b border-white/5 pb-4">
+        <div>
+          <h1 class="text-3xl font-black text-gold-gradient">ប្រព័ន្ធតេស្តសមត្ថភាពជួញដូរ / Quiz Center</h1>
+          <p class="text-sm text-gray-400 mt-1">ឆ្លើយសំណួរដើម្បីបញ្ចប់វគ្គសិក្សា និងទទួលបានវិញ្ញាបនបត្រផ្លូវការ</p>
+        </div>
+        <div class="flex items-center gap-2 px-3 py-1.5 rounded-full bg-primary/10 border border-primary/20 text-xs font-bold text-primary" id="quiz-streak-badge">
+          🔥 Streak: 0 ថ្ងៃ
+        </div>
+      </div>
+
+      <!-- Quiz Selection / Welcome Screen -->
+      <div id="quiz-welcome-screen" class="glass-card p-8 rounded-2xl flex flex-col gap-6 items-center text-center">
+        <div class="w-16 h-16 rounded-full bg-primary/10 border border-primary/30 flex items-center justify-center text-primary text-3xl shadow-[0_0_20px_rgba(255,215,0,0.1)]">
+          🎓
+        </div>
+        <div>
+          <h2 class="text-xl font-bold">ចាប់ផ្ដើមតេស្តបញ្ចប់វគ្គសិក្សាចំនួន ២៦ មេរៀន</h2>
+          <p class="text-sm text-gray-400 mt-2 max-w-md">សំណួរនីមួយៗមានរយៈពេលកំណត់ ៣០ វិនាទី។ អ្នកត្រូវឆ្លើយឱ្យបានត្រឹមត្រូវច្រើនជាង ៨០% ដើម្បីទទួលបានវិញ្ញាបនបត្របញ្ចប់ការសិក្សាពី SMC KH Academy។</p>
+        </div>
+        <button onclick="startActiveQuiz()" class="px-8 py-4 bg-gradient-to-r from-primary to-accent hover:from-accent hover:to-primary text-black font-extrabold rounded-xl transition-all shadow-[0_4px_20px_rgba(255,215,0,0.3)] hover:scale-105 active:scale-95 flex items-center gap-2">
+          ចាប់ផ្តើមធ្វើតេស្ត <i data-lucide="chevron-right" class="w-5 h-5"></i>
+        </button>
+      </div>
+
+      <!-- Active Quiz Interface -->
+      <div id="quiz-active-interface" class="hidden flex flex-col gap-6">
+        <div class="flex items-center justify-between">
+          <div class="flex flex-col gap-1.5 w-2/3">
+            <div class="flex items-center justify-between text-xs text-gray-400 font-bold uppercase">
+              <span id="quiz-question-number">សំណួរទី ១ / ២៦</span>
+              <span id="quiz-percentage-text">0% Completed</span>
+            </div>
+            <div class="w-full h-2 bg-white/5 rounded-full overflow-hidden">
+              <div id="quiz-progressbar-fill" class="h-full bg-gradient-to-r from-primary to-accent transition-all duration-300" style="width: 4%"></div>
+            </div>
+          </div>
+          <div class="flex items-center gap-2 bg-white/5 border border-white/10 rounded-xl px-4 py-2">
+            <i data-lucide="clock" class="w-4 h-4 text-primary animate-pulse"></i>
+            <span class="text-sm font-black font-mono text-primary" id="quiz-timer-text">30s</span>
+          </div>
+        </div>
+
+        <!-- Question Box -->
+        <div class="glass-card p-6 rounded-2xl">
+          <h3 class="text-lg font-bold leading-snug" id="quiz-question-title">Loading Question...</h3>
+        </div>
+
+        <!-- Option Buttons Grid -->
+        <div class="flex flex-col gap-3" id="quiz-options-box">
+          <!-- dynamic options -->
+        </div>
+
+        <div class="flex justify-end mt-2">
+          <button onclick="submitQuizAnswer()" id="btn-quiz-submit" disabled class="px-6 py-3 bg-white/5 border border-white/10 text-gray-400 font-bold rounded-xl transition-all cursor-not-allowed">
+            បញ្ជូនចម្លើយ (Submit Answer)
+          </button>
+        </div>
+      </div>
+
+      <!-- Quiz Completed Screen / Certificate -->
+      <div id="quiz-completed-screen" class="hidden flex flex-col gap-8 items-center text-center">
+        <div class="glass-card p-8 rounded-2xl w-full flex flex-col gap-6 items-center">
+          <div class="w-16 h-16 rounded-full bg-green-500/10 border border-green-500/30 flex items-center justify-center text-green-400 text-3xl">
+            🏆
+          </div>
+          <div>
+            <h2 class="text-2xl font-black text-green-400">អបអរសាទរ! អ្នកបានបញ្ចប់ការប្រលង</h2>
+            <p class="text-sm text-gray-300 mt-2">ពិន្ទុរបស់អ្នក៖ <strong class="text-primary" id="completed-score-text">0 / 26 (0%)</strong></p>
+          </div>
+
+          <!-- Generated Certificate HTML View -->
+          <div class="w-full max-w-xl certificate-preview p-8 rounded-xl flex flex-col gap-6 text-center border-double border-4 border-primary relative overflow-hidden" id="certificate-print-area">
+            <div class="absolute inset-0 bg-[radial-gradient(circle_at_center,_var(--tw-gradient-stops))] from-yellow-500/5 via-transparent to-transparent pointer-events-none"></div>
+            
+            <div class="flex flex-col items-center gap-1.5">
+              <span class="text-[10px] tracking-[0.3em] uppercase text-primary font-black">SMC KH Academy Certificate</span>
+              <h3 class="text-2xl font-serif font-black tracking-wide text-gold-gradient">វិញ្ញាបនបត្របញ្ចប់ការសិក្សា</h3>
+            </div>
+            
+            <div class="flex flex-col gap-1">
+              <span class="text-xs text-gray-400">វិញ្ញាបនបត្រនេះបញ្ជាក់ថា</span>
+              <span class="text-xl font-bold text-white tracking-wide" id="cert-student-name">សិស្សជួញដូរ</span>
+            </div>
+
+            <div class="flex flex-col gap-2 max-w-sm mx-auto">
+              <p class="text-xs text-gray-300 leading-relaxed">បានសិក្សាចប់សព្វគ្រប់ និងទទួលបានពិន្ទុជាប់ ក្នុងការប្រលងបញ្ចប់ការសិក្សាវគ្គជួញដូរ Forex, XAUUSD និងយុទ្ធសាស្ត្រស្ថាប័នធំ Smart Money Concepts (SMC)។</p>
+            </div>
+
+            <div class="flex items-center justify-between border-t border-white/10 pt-4 mt-2 text-[10px] text-gray-400">
+              <div class="text-left">
+                <span>Date: <strong class="text-white" id="cert-date">2026-06-26</strong></span>
+              </div>
+              <div class="text-center font-mono text-primary font-black">
+                <span>VERIFIED SECURE</span>
+              </div>
+              <div class="text-right">
+                <span>Instructor: <strong class="text-white">SMC KH COACH</strong></span>
+              </div>
+            </div>
+          </div>
+
+          <div class="flex flex-wrap items-center gap-4">
+            <button onclick="window.print()" class="px-6 py-3 bg-gradient-to-r from-primary to-accent text-black font-extrabold rounded-xl transition-all hover:scale-105 active:scale-95 flex items-center gap-2">
+              <i data-lucide="printer" class="w-4 h-4"></i> បោះពុម្ពវិញ្ញាបនបត្រ
+            </button>
+            <button onclick="switchView('landing')" class="px-6 py-3 bg-white/5 border border-white/10 hover:border-primary/30 text-white font-bold rounded-xl transition-all">
+              ត្រឡប់ទៅទំព័រដើម
+            </button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ========================================== -->
+    <!-- 5. TRADING TOOLS VIEW                     -->
+    <!-- ========================================== -->
+    <section id="view-tools" class="view-panel hidden w-full max-w-7xl mx-auto px-6 py-12 flex flex-col gap-10">
+      <div>
+        <h1 class="text-3xl font-black text-gold-gradient">ប្រព័ន្ធឧបករណ៍ជួញដូរ / Professional Trading Tools</h1>
+        <p class="text-sm text-gray-400 mt-1">គណនាទំហំ Lot, ពិនិត្យមើលម៉ោងទីផ្សារ និងតារាងតម្លៃមាសផ្ទាល់</p>
+      </div>
+
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+        
+        <!-- Calculator & Session Clock side panel (5 cols) -->
+        <div class="lg:col-span-5 flex flex-col gap-6">
+          
+          <!-- Lot Size & RR Calculator -->
+          <div class="glass-card p-6 rounded-2xl flex flex-col gap-4 text-left">
+            <h2 class="text-sm font-bold text-primary uppercase tracking-widest border-b border-white/5 pb-2 flex items-center gap-2">
+              <i data-lucide="calculator" class="w-4 h-4"></i> Lot Size & Risk Calculator
+            </h2>
+
+            <div class="flex flex-col gap-3">
+              <div class="grid grid-cols-2 gap-4">
+                <div class="flex flex-col gap-1.5">
+                  <label class="text-xs font-bold text-gray-400 uppercase">គណនី ($)</label>
+                  <input type="number" id="tools-bal" class="p-2.5 rounded-lg bg-black/40 border border-white/5 focus:border-primary/40 text-sm text-white font-bold font-mono outline-none" value="1000" oninput="calculateToolsLot()">
+                </div>
+                <div class="flex flex-col gap-1.5">
+                  <label class="text-xs font-bold text-gray-400 uppercase">ហានិភ័យ (%)</label>
+                  <input type="number" id="tools-risk" class="p-2.5 rounded-lg bg-black/40 border border-white/5 focus:border-primary/40 text-sm text-white font-bold font-mono outline-none" value="1" step="0.5" oninput="calculateToolsLot()">
+                </div>
+              </div>
+
+              <div class="grid grid-cols-2 gap-4">
+                <div class="flex flex-col gap-1.5">
+                  <label class="text-xs font-bold text-gray-400 uppercase">Stop Loss (Pips)</label>
+                  <input type="number" id="tools-sl" class="p-2.5 rounded-lg bg-black/40 border border-white/5 focus:border-primary/40 text-sm text-white font-bold font-mono outline-none" value="20" oninput="calculateToolsLot()">
+                </div>
+                <div class="flex flex-col gap-1.5">
+                  <label class="text-xs font-bold text-gray-400 uppercase">Reward (Ratio)</label>
+                  <input type="number" id="tools-rr" class="p-2.5 rounded-lg bg-black/40 border border-white/5 focus:border-primary/40 text-sm text-white font-bold font-mono outline-none" value="3" oninput="calculateToolsLot()">
+                </div>
+              </div>
+
+              <!-- Output Box -->
+              <div class="mt-2 p-4 rounded-xl bg-primary/5 border border-primary/10 flex flex-col gap-2">
+                <div class="flex items-center justify-between text-xs font-semibold text-gray-400">
+                  <span>ទំហំ Lot សមស្រប (Lot Size):</span>
+                  <span class="text-primary font-black font-mono lot-value-highlight text-base" id="tools-result-lot">0.05 Lot</span>
+                </div>
+                <div class="flex items-center justify-between text-xs font-semibold text-gray-400 border-t border-white/5 pt-2">
+                  <span>ចំនួនទឹកប្រាក់រងគ្រោះ (Risk $):</span>
+                  <span class="text-red-400 font-bold font-mono" id="tools-result-risk-cash">$10.00</span>
+                </div>
+                <div class="flex items-center justify-between text-xs font-semibold text-gray-400">
+                  <span>ប្រាក់ចំណេញរំពឹងទុក (Reward $):</span>
+                  <span class="text-green-400 font-bold font-mono" id="tools-result-reward-cash">$30.00</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Session Market Clock -->
+          <div class="glass-card p-6 rounded-2xl flex flex-col gap-4 text-left">
+            <h2 class="text-sm font-bold text-primary uppercase tracking-widest border-b border-white/5 pb-2 flex items-center gap-2">
+              <i data-lucide="globe" class="w-4 h-4"></i> ម៉ោងទីផ្សារជួញដូរ / Market Sessions
+            </h2>
+            
+            <div class="flex flex-col gap-3">
+              <div class="flex items-center justify-between p-2.5 rounded-lg bg-black/20 border border-white/5">
+                <span class="text-xs font-bold">Asian Session (Tokyo)</span>
+                <span class="px-2 py-0.5 rounded text-[10px] font-black uppercase bg-green-500/10 text-green-400" id="session-tokyo">OPEN</span>
+              </div>
+              <div class="flex items-center justify-between p-2.5 rounded-lg bg-black/20 border border-white/5">
+                <span class="text-xs font-bold">London Killzone (GBP/EUR)</span>
+                <span class="px-2 py-0.5 rounded text-[10px] font-black uppercase bg-yellow-500/10 text-yellow-500" id="session-london">PENDING</span>
+              </div>
+              <div class="flex items-center justify-between p-2.5 rounded-lg bg-black/20 border border-white/5">
+                <span class="text-xs font-bold">New York Killzone (USD/Gold)</span>
+                <span class="px-2 py-0.5 rounded text-[10px] font-black uppercase bg-red-500/10 text-red-500" id="session-ny">CLOSED</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Live TradingView Chart (7 cols) -->
+        <div class="lg:col-span-7 w-full h-[520px] rounded-2xl overflow-hidden glass-card p-4 flex flex-col gap-3">
+          <div class="flex items-center justify-between text-xs font-bold">
+            <span class="text-gray-400">GOLD / USD LIVE CHART</span>
+            <span class="text-primary">TradingView Widget</span>
+          </div>
+          
+          <div class="flex-grow w-full h-full bg-black/50 rounded-xl overflow-hidden relative">
+            <!-- Dynamic TradingView widget injection -->
+            <iframe src="https://s.tradingview.com/widgetembed/?frameElementId=tradingview_chart&symbol=OANDA%3AXAUUSD&interval=H1&hidesidetoolbar=1&symboledit=1&saveimage=1&toolbarbg=f1f3f6&studies=%5B%5D&theme=dark&style=1&timezone=Asia%2FPhnom_Penh" class="absolute inset-0 w-full h-full border-0"></iframe>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ========================================== -->
+    <!-- 6. STUDENT DASHBOARD VIEW                  -->
+    <!-- ========================================== -->
+    <section id="view-dashboard" class="view-panel hidden w-full max-w-7xl mx-auto px-6 py-12 flex flex-col gap-10">
+      
+      <!-- Profile Header -->
+      <div class="glass-card p-6 rounded-2xl flex flex-col md:flex-row md:items-center justify-between gap-6">
+        <div class="flex items-center gap-4 text-left">
+          <div class="w-16 h-16 rounded-full bg-gradient-to-br from-primary to-accent text-black font-black text-2xl flex items-center justify-center shadow-[0_0_20px_rgba(255,215,0,0.3)]">
+            KH
+          </div>
+          <div>
+            <h2 class="text-xl font-bold">សិស្សជួញដូរ (SMC Student)</h2>
+            <p class="text-xs text-primary font-semibold mt-1">🏆 វគ្គសិក្សាកម្រិតខ្ពស់ / Lifetime Professional Member</p>
+          </div>
+        </div>
+
+        <div class="flex items-center gap-6">
+          <div class="text-center">
+            <span class="block text-[10px] font-bold text-gray-500 uppercase">Daily Streak</span>
+            <span class="text-xl font-black text-primary flex items-center gap-1 mt-0.5 justify-center">🔥 3 ថ្ងៃ</span>
+          </div>
+          <div class="text-center border-l border-white/5 pl-6">
+            <span class="block text-[10px] font-bold text-gray-500 uppercase">Completions</span>
+            <span class="text-xl font-black text-white mt-0.5" id="dashboard-completions-count">0 / 26</span>
+          </div>
+          <div class="text-center border-l border-white/5 pl-6">
+            <span class="block text-[10px] font-bold text-gray-500 uppercase">Rank</span>
+            <span class="text-xl font-black text-accent mt-0.5">#12</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+        
+        <!-- Left: Streak and Leaderboard (5 cols) -->
+        <div class="lg:col-span-5 flex flex-col gap-6">
+          
+          <!-- Leaderboard Grid -->
+          <div class="glass-card p-6 rounded-2xl flex flex-col gap-4 text-left">
+            <h3 class="text-sm font-bold text-primary uppercase tracking-widest border-b border-white/5 pb-2 flex items-center gap-2">
+              <i data-lucide="award" class="w-4 h-4"></i> Leaderboard (តារាងចំណាត់ថ្នាក់)
+            </h3>
+            
+            <div class="flex flex-col gap-2.5">
+              <div class="flex items-center justify-between p-2.5 rounded-lg bg-yellow-500/10 border border-yellow-500/20">
+                <span class="text-xs font-bold text-yellow-500 flex items-center gap-2">🥇 1. សុខ ម៉េង <small class="text-gray-400 font-semibold">(26/26)</small></span>
+                <span class="text-xs font-black text-yellow-500">100%</span>
+              </div>
+              <div class="flex items-center justify-between p-2.5 rounded-lg bg-gray-400/10 border border-gray-400/20">
+                <span class="text-xs font-bold text-gray-300 flex items-center gap-2">🥈 2. នារី ស្រីរ័ត្ន <small class="text-gray-400 font-semibold">(24/26)</small></span>
+                <span class="text-xs font-black text-gray-400">92%</span>
+              </div>
+              <div class="flex items-center justify-between p-2.5 rounded-lg bg-amber-600/10 border border-amber-600/20">
+                <span class="text-xs font-bold text-amber-600 flex items-center gap-2">🥉 3. គឹម ហុង <small class="text-gray-400 font-semibold">(22/26)</small></span>
+                <span class="text-xs font-black text-amber-600">85%</span>
+              </div>
+              <div class="flex items-center justify-between p-2.5 rounded-lg bg-white/2 border border-white/5 mt-2">
+                <span class="text-xs font-bold text-gray-400 flex items-center gap-2">👉 12. គណនីរបស់អ្នក <small class="text-gray-400 font-semibold" id="leaderboard-student-lessons">(0/26)</small></span>
+                <span class="text-xs font-black text-primary" id="leaderboard-student-percent">0%</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Achievements/Badges -->
+          <div class="glass-card p-6 rounded-2xl flex flex-col gap-4 text-left">
+            <h3 class="text-sm font-bold text-primary uppercase tracking-widest border-b border-white/5 pb-2 flex items-center gap-2">
+              <i data-lucide="sparkles" class="w-4 h-4"></i> Achievements (សមិទ្ធិផល)
+            </h3>
+            
+            <div class="grid grid-cols-3 gap-3 text-center">
+              <div class="p-3 rounded-xl bg-white/5 border border-white/10 opacity-40" id="badge-first-lesson">
+                <span class="text-2xl block">🔰</span>
+                <span class="text-[9px] font-bold text-gray-400 block mt-1 uppercase">First Step</span>
+              </div>
+              <div class="p-3 rounded-xl bg-white/5 border border-white/10 opacity-40" id="badge-smc-master">
+                <span class="text-2xl block">📊</span>
+                <span class="text-[9px] font-bold text-gray-400 block mt-1 uppercase">SMC Master</span>
+              </div>
+              <div class="p-3 rounded-xl bg-white/5 border border-white/10 opacity-40" id="badge-graduated">
+                <span class="text-2xl block">🎓</span>
+                <span class="text-[9px] font-bold text-gray-400 block mt-1 uppercase">Graduate</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Right: Progress overview and Completed Lessons list (7 cols) -->
+        <div class="lg:col-span-7 flex flex-col gap-6">
+          <div class="glass-card p-6 rounded-2xl text-left flex flex-col gap-4">
+            <h3 class="text-sm font-bold text-primary uppercase tracking-widest border-b border-white/5 pb-2">
+              វឌ្ឍនភាពមេរៀន / Learning Progress
+            </h3>
+
+            <div class="flex flex-col gap-3" id="dashboard-completions-list">
+              <div class="text-sm text-gray-400 italic">មិនទាន់មានមេរៀនដែលបានបញ្ចប់នៅឡើយទេ។ សូមចូលទៅកាន់ទំព័រ Lessons ដើម្បីចាប់ផ្ដើមការសិក្សា!</div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ========================================== -->
+    <!-- 7. ADMIN DASHBOARD VIEW                    -->
+    <!-- ========================================== -->
+    <section id="view-admin" class="view-panel hidden w-full max-w-7xl mx-auto px-6 py-12 flex flex-col gap-8">
+      <div>
+        <h1 class="text-3xl font-black text-gold-gradient">ប្រព័ន្ធគ្រប់គ្រងវេទិកា / Admin Dashboard</h1>
+        <p class="text-sm text-gray-400 mt-1">ត្រួតពិនិត្យដំណើរការប្រព័ន្ធ ហ្វឹកហាត់ម៉ូដែល AI និងគ្រប់គ្រងមេរៀនជួញដូរ</p>
+      </div>
+
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+        
+        <!-- Left: Model configuration parameters (4 cols) -->
+        <div class="lg:col-span-4 flex flex-col gap-6 text-left">
+          
+          <!-- Backtest ML config parameters -->
+          <div class="glass-card p-6 rounded-2xl flex flex-col gap-4">
+            <h2 class="text-sm font-bold text-primary uppercase tracking-widest border-b border-white/5 pb-2">
+              ⚙️ AI Model Strategy Trainer
+            </h2>
+
+            <div class="flex flex-col gap-4">
+              <div class="flex flex-col gap-1.5">
+                <label class="text-[10px] font-bold text-gray-400 uppercase">Symbol (គូជួញដូរ)</label>
+                <input type="text" id="admin-symbol" class="p-2.5 rounded-lg bg-black/40 border border-white/5 focus:border-primary/40 text-sm text-white font-bold outline-none" value="XAUUSD">
+              </div>
+
+              <div class="flex flex-col gap-1.5">
+                <label class="text-[10px] font-bold text-gray-400 uppercase">Period (រយៈពេល)</label>
+                <select id="admin-period" class="p-2.5 rounded-lg bg-black/40 border border-white/5 focus:border-primary/40 text-sm text-white font-bold outline-none">
+                  <option value="3mo">3 ខែ / 3 Months</option>
+                  <option value="6mo">6 ខែ / 6 Months</option>
+                  <option value="1y" selected>1 ឆ្នាំ / 1 Year</option>
+                  <option value="2y">2 ឆ្នាំ / 2 Years</option>
+                </select>
+              </div>
+
+              <div class="flex flex-col gap-1.5">
+                <label class="text-[10px] font-bold text-gray-400 uppercase">Interval (ចន្លោះពេល)</label>
+                <select id="admin-interval" class="p-2.5 rounded-lg bg-black/40 border border-white/5 focus:border-primary/40 text-sm text-white font-bold outline-none">
+                  <option value="1d" selected>1 ថ្ងៃ / 1 Day</option>
+                  <option value="1h">1 ម៉ោង / 1 Hour</option>
+                </select>
+              </div>
+
+              <button onclick="runAdminBacktest()" id="btn-admin-train" class="w-full py-3 bg-gradient-to-r from-primary to-accent hover:from-accent hover:to-primary text-black font-extrabold rounded-xl transition-all flex items-center justify-center gap-2 shadow-[0_4px_15px_rgba(255,215,0,0.2)]">
+                <i data-lucide="play" class="w-4 h-4 fill-black"></i> ចាប់ផ្តើមហ្វឹកហាត់ AI Model
+              </button>
+            </div>
+          </div>
+
+          <!-- Mock Upload Manager (Videos/PDFs) -->
+          <div class="glass-card p-6 rounded-2xl flex flex-col gap-4">
+            <h2 class="text-sm font-bold text-primary uppercase tracking-widest border-b border-white/5 pb-2">
+              📁 Upload Resources (បញ្ជូនឯកសារ)
+            </h2>
+
+            <div class="flex flex-col gap-3 text-xs">
+              <div class="flex flex-col gap-1.5">
+                <label class="font-bold text-gray-400 uppercase">File Title (ឈ្មោះឯកសារ)</label>
+                <input type="text" class="p-2 rounded bg-black/40 border border-white/5 outline-none" placeholder="e.g. SMC Complete PDF Khmer">
+              </div>
+              <div class="flex flex-col gap-1.5">
+                <label class="font-bold text-gray-400 uppercase">File Category</label>
+                <select class="p-2 rounded bg-black/40 border border-white/5 outline-none">
+                  <option>PDF Guide / Ebook</option>
+                  <option>Trading Indicator Template</option>
+                  <option>Video Material</option>
+                </select>
+              </div>
+              <button onclick="showToast('បានបង្ហោះឯកសារជោគជ័យ')" class="py-2.5 bg-white/5 hover:bg-white/10 border border-white/10 rounded-lg text-white font-bold transition-all">
+                បន្តបង្ហោះឯកសារ
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Right: Statistical Backtest Output (8 cols) -->
+        <div class="lg:col-span-8 flex flex-col gap-6 text-left">
+          
+          <div class="glass-card p-6 rounded-2xl flex flex-col gap-6 min-h-[350px] items-center justify-center" id="admin-results-area">
+            <!-- Welcome status placeholder -->
+            <div id="admin-results-placeholder" class="text-center flex flex-col items-center gap-4 text-gray-400 max-w-sm">
+              <div class="text-4xl text-primary">📊</div>
+              <h3 class="text-base font-bold text-white">រង់ចាំការហ្វឹកហាត់ម៉ូដែល</h3>
+              <p class="text-xs">សូមចុចប៊ូតុង "ចាប់ផ្តើមហ្វឹកហាត់ AI Model" នៅផ្នែកខាងឆ្វេង ដើម្បីទាញយកទិន្នន័យទីផ្សារ និងវិភាគសញ្ញាជួញដូរ XAUUSD បច្ចុប្បន្ន។</p>
+            </div>
+
+            <!-- Loading status -->
+            <div id="admin-results-loading" class="hidden text-center flex flex-col items-center gap-4">
+              <div class="animate-spin rounded-full h-8 w-8 border-2 border-primary border-t-transparent"></div>
+              <span class="text-sm font-semibold text-primary">កំពុងទាញយកទិន្នន័យពី Yahoo Finance និង Backtesting យុទ្ធសាស្ត្រ...</span>
+            </div>
+
+            <!-- Results charts and statistics -->
+            <div id="admin-results-content" class="hidden w-full flex flex-col gap-6">
+              
+              <!-- Latest Signal Header Card -->
+              <div class="p-4 rounded-xl bg-green-500/5 border border-green-500/20 flex items-center justify-between">
+                <div class="flex items-center gap-3">
+                  <span class="text-2xl">🟢</span>
+                  <div>
+                    <span class="block text-[10px] text-gray-500 font-bold uppercase tracking-wider">Latest AI Signal</span>
+                    <span class="text-lg font-black text-green-400" id="admin-signal-direction">BUY</span>
+                  </div>
+                </div>
+                <div class="text-right text-xs font-semibold text-gray-300" id="admin-signal-values">
+                  <!-- Injected SL/TP -->
+                </div>
+              </div>
+
+              <!-- Backtest Stats row -->
+              <div class="grid grid-cols-2 md:grid-cols-4 gap-4 text-center">
+                <div class="p-4 rounded-xl bg-black/40 border border-white/5">
+                  <span class="block text-[9px] font-bold text-gray-500 uppercase">Win Rate</span>
+                  <span class="text-lg font-black text-primary mt-1 block" id="admin-stat-winrate">0.0%</span>
+                </div>
+                <div class="p-4 rounded-xl bg-black/40 border border-white/5">
+                  <span class="block text-[9px] font-bold text-gray-500 uppercase">Strategy Return</span>
+                  <span class="text-lg font-black text-green-400 mt-1 block" id="admin-stat-return">0.0%</span>
+                </div>
+                <div class="p-4 rounded-xl bg-black/40 border border-white/5">
+                  <span class="block text-[9px] font-bold text-gray-500 uppercase">Sharpe Ratio</span>
+                  <span class="text-lg font-black text-white mt-1 block" id="admin-stat-sharpe">0.00</span>
+                </div>
+                <div class="p-4 rounded-xl bg-black/40 border border-white/5">
+                  <span class="block text-[9px] font-bold text-gray-500 uppercase">Accuracy</span>
+                  <span class="text-lg font-black text-white mt-1 block" id="admin-stat-accuracy">0.0%</span>
+                </div>
+              </div>
+
+              <!-- Output ChartJS Canvas -->
+              <div class="p-4 rounded-xl bg-black/40 border border-white/5 h-64 relative">
+                <canvas id="adminBacktestChart"></canvas>
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ========================================== -->
+    <!-- 8. COMMUNITY DISCUSSION VIEW               -->
+    <!-- ========================================== -->
+    <section id="view-community" class="view-panel hidden w-full max-w-4xl mx-auto px-6 py-12 flex flex-col gap-8">
+      <div class="flex items-center justify-between border-b border-white/5 pb-4">
+        <div>
+          <h1 class="text-3xl font-black text-gold-gradient">សហគមន៍ជជែកពិភាក្សា / Community Forum</h1>
+          <p class="text-sm text-gray-400 mt-1">ពិភាក្សាអំពីមេរៀន យុទ្ធសាស្ត្រជួញដូរ និងការវិភាគគូទីផ្សារប្រចាំថ្ងៃ</p>
+        </div>
+        <div class="flex items-center gap-2">
+          <a href="https://t.me/smc_kh_academy" target="_blank" class="px-4 py-2 rounded-xl bg-sky-500/10 hover:bg-sky-500/20 border border-sky-500/20 text-xs font-bold text-sky-400 transition-all flex items-center gap-1.5">
+            Telegram Channel
+          </a>
+          <a href="https://discord.gg/smc_kh" target="_blank" class="px-4 py-2 rounded-xl bg-indigo-500/10 hover:bg-indigo-500/20 border border-indigo-500/20 text-xs font-bold text-indigo-400 transition-all flex items-center gap-1.5">
+            Discord Server
+          </a>
+        </div>
+      </div>
+
+      <!-- Add New Discussion Form -->
+      <div class="glass-card p-6 rounded-2xl flex flex-col gap-4 text-left">
+        <h3 class="text-sm font-bold text-primary uppercase tracking-widest">បង្កើតប្រធានបទថ្មី / Post a Discussion</h3>
+        <div class="flex flex-col gap-3">
+          <textarea id="forum-input" rows="2" class="w-full p-3 rounded-xl bg-black/40 border border-white/5 focus:border-primary/40 text-sm outline-none placeholder-gray-500 resize-none" placeholder="សរសេរសំណួរ ឬការវិភាគរបស់អ្នកនៅទីនេះ..."></textarea>
+          <div class="flex justify-end">
+            <button onclick="postForumComment()" class="px-6 py-2.5 bg-gradient-to-r from-primary to-accent hover:from-accent hover:to-primary text-black font-extrabold rounded-lg text-xs transition-all">
+              បង្ហោះសំណួរ (Post Comment)
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Comments Stream -->
+      <div class="flex flex-col gap-4 text-left" id="forum-comments-stream">
+        <!-- populated dynamically -->
+      </div>
+    </section>
+
+    <!-- ========================================== -->
+    <!-- 9. BLOG FEED VIEW                          -->
+    <!-- ========================================== -->
+    <section id="view-blog" class="view-panel hidden w-full max-w-5xl mx-auto px-6 py-12 flex flex-col gap-10">
+      <div>
+        <h1 class="text-3xl font-black text-gold-gradient">ព័ត៌មាន និងការវិភាគទីផ្សារ / Blog & Daily Analysis</h1>
+        <p class="text-sm text-gray-400 mt-1">អានការវិភាគបច្ចេកទេសមាសប្រចាំថ្ងៃ ព័ត៌មានសេដ្ឋកិច្ចសំខាន់ៗ និងគន្លឹះជួញដូរ</p>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-8 text-left" id="blog-articles-grid">
+        <!-- populated dynamically -->
+      </div>
+    </section>
+
+    <!-- ========================================== -->
+    <!-- 10. DOWNLOADS VIEW                         -->
+    <!-- ========================================== -->
+    <section id="view-downloads" class="view-panel hidden w-full max-w-5xl mx-auto px-6 py-12 flex flex-col gap-10">
+      <div>
+        <h1 class="text-3xl font-black text-gold-gradient">ធនធានជួញដូរឥតគិតថ្លៃ / Downloads Library</h1>
+        <p class="text-sm text-gray-400 mt-1">ទាញយកសៀវភៅអេឡិចត្រូនិច (Ebooks), រូបមន្តបញ្ជីត្រួតពិនិត្យ (Checklists) និងសូចនាករ MT5</p>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 text-left" id="downloads-items-grid">
+        <!-- Injected resource cards -->
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ========================================== -->
+  <!-- FLOATING CHATBOT PANEL COMPONENT           -->
+  <!-- ========================================== -->
+  <div id="chatbot-float-panel" class="fixed bottom-6 right-6 z-50 w-96 h-[500px] glass-card rounded-2xl shadow-[0_10px_40px_rgba(0,0,0,0.7)] border border-primary/20 flex flex-col overflow-hidden transition-all duration-300 transform translate-y-12 opacity-0 pointer-events-none">
+    
+    <!-- Header -->
+    <div class="px-5 py-4 bg-gradient-to-r from-primary/10 to-accent/10 border-b border-white/5 flex items-center justify-between">
+      <div class="flex items-center gap-2.5">
+        <div class="w-2.5 h-2.5 bg-green-500 rounded-full animate-ping"></div>
+        <div>
+          <h3 class="text-xs font-black text-primary uppercase tracking-wider">AI Training Coach (Khmer)</h3>
+          <span class="text-[9px] text-gray-400 font-semibold">Gemini Powered Assistant</span>
+        </div>
+      </div>
+      <button onclick="toggleChatbot()" class="text-gray-400 hover:text-white transition-all">
+        <i data-lucide="x" class="w-4 h-4"></i>
+      </button>
+    </div>
+
+    <!-- Chat Messages Stream -->
+    <div class="flex-grow overflow-y-auto p-4 flex flex-col gap-4 text-xs" id="chat-messages-box">
+      <!-- Welcome message -->
+      <div class="flex items-start gap-2.5">
+        <div class="w-7 h-7 rounded-lg bg-gradient-to-br from-primary to-accent text-black font-extrabold flex items-center justify-center text-[10px]">
+          AI
+        </div>
+        <div class="p-3 bg-white/5 border border-white/10 rounded-r-xl rounded-bl-xl text-left max-w-[80%] leading-relaxed text-gray-200">
+          សួស្ដី! ខ្ញុំជាគ្រូបង្វឹក និងជាជំនួយការសិក្សា SMC/ICT ផ្ទាល់ខ្លួនរបស់លោកអ្នក។ ចោទសួរខ្ញុំអំពី XAUUSD យុទ្ធសាស្ត្រ SMC/ICT ឬការគ្រប់គ្រងហានិភ័យបាន!
+        </div>
+      </div>
+    </div>
+
+    <!-- Suggestions area -->
+    <div class="px-3 py-1.5 bg-black/40 border-t border-white/5 flex gap-1.5 overflow-x-auto whitespace-nowrap" id="chat-sug-row">
+      <button onclick="sendQuickQuestion('តើ Order Block គឺជាអ្វី?')" class="px-2.5 py-1 rounded-full bg-white/5 hover:bg-white/10 border border-white/5 text-[9px] font-bold text-gray-300">OB គឺជាអ្វី?</button>
+      <button onclick="sendQuickQuestion('តើអ្វីជាភាពខុសគ្នារវាង BOS និង CHoCH?')" class="px-2.5 py-1 rounded-full bg-white/5 hover:bg-white/10 border border-white/5 text-[9px] font-bold text-gray-300">BOS vs CHoCH</button>
+      <button onclick="sendQuickQuestion('តើ FVG គឺជាអ្វី?')" class="px-2.5 py-1 rounded-full bg-white/5 hover:bg-white/10 border border-white/5 text-[9px] font-bold text-gray-300">FVG គឺជាអ្វី?</button>
+    </div>
+
+    <!-- Input Footer -->
+    <div class="p-3 bg-black/60 border-t border-white/5 flex gap-2">
+      <input type="text" id="chat-input-field" onkeydown="handleChatKey(event)" class="flex-grow px-3 py-2 rounded-xl bg-white/5 border border-white/5 focus:border-primary/40 text-xs outline-none placeholder-gray-500" placeholder="សួរសំណួររបស់អ្នកទីនេះ...">
+      <button onclick="sendChatbotMessage()" class="px-3 py-2 bg-gradient-to-r from-primary to-accent text-black font-extrabold rounded-xl text-xs hover:scale-105 active:scale-95 transition-all">
+        ផ្ញើ
+      </button>
+    </div>
+  </div>
+
+  <!-- Toast Toast Notifications Component -->
+  <div id="toast-notif" class="fixed top-20 right-6 z-50 px-4 py-3 rounded-xl bg-black border border-primary/20 text-xs font-bold text-primary shadow-[0_0_15px_rgba(255,215,0,0.15)] flex items-center gap-2 transform translate-x-20 opacity-0 pointer-events-none transition-all duration-300">
+    <i data-lucide="info" class="w-4 h-4"></i>
+    <span id="toast-message">Notification message here</span>
+  </div>
+
+  <!-- Footer -->
+  <footer class="border-t border-white/5 bg-[#0a0a0a] px-6 py-8 flex flex-col gap-6 text-sm text-gray-500 text-left">
+    <div class="max-w-7xl mx-auto w-full grid grid-cols-1 md:grid-cols-4 gap-8">
+      <div class="flex flex-col gap-3">
+        <span class="text-sm font-black text-white uppercase tracking-wider">SMC KH Academy</span>
+        <p class="text-xs leading-relaxed text-gray-400">វេទិកាអប់រំ និងហ្វឹកហាត់យុទ្ធសាស្ត្រជួញដូរហិរញ្ញវត្ថុកម្រិតស្ថាប័នធំដំបូងគេ និងធំជាងគេបង្អស់នៅកម្ពុជា។</p>
+      </div>
+      <div class="flex flex-col gap-2">
+        <span class="text-xs font-bold text-white uppercase tracking-widest mb-1">វគ្គសិក្សា</span>
+        <button onclick="switchView('courses')" class="text-left text-xs hover:text-primary transition-all">មូលដ្ឋានគ្រឹះ Forex</button>
+        <button onclick="switchView('courses')" class="text-left text-xs hover:text-primary transition-all">XAUUSD Masterclass</button>
+        <button onclick="switchView('courses')" class="text-left text-xs hover:text-primary transition-all">SMC Complete Strategy</button>
+      </div>
+      <div class="flex flex-col gap-2">
+        <span class="text-xs font-bold text-white uppercase tracking-widest mb-1">ជំនួយការ</span>
+        <button onclick="switchView('landing')" class="text-left text-xs hover:text-primary transition-all">លក្ខខណ្ឌប្រើប្រាស់</button>
+        <button onclick="switchView('landing')" class="text-left text-xs hover:text-primary transition-all">សេវាកម្មគណនី</button>
+        <button onclick="toggleChatbot()" class="text-left text-xs hover:text-primary transition-all">AI Coach Chat</button>
+      </div>
+      <div class="flex flex-col gap-3">
+        <span class="text-xs font-bold text-white uppercase tracking-widest">តាមដានយើងខ្ញុំ</span>
+        <div class="flex items-center gap-3">
+          <a href="#" class="p-2 rounded-lg bg-white/5 hover:bg-white/10 text-gray-400 hover:text-primary transition-all"><i data-lucide="youtube" class="w-4 h-4"></i></a>
+          <a href="#" class="p-2 rounded-lg bg-white/5 hover:bg-white/10 text-gray-400 hover:text-primary transition-all"><i data-lucide="facebook" class="w-4 h-4"></i></a>
+          <a href="#" class="p-2 rounded-lg bg-white/5 hover:bg-white/10 text-gray-400 hover:text-primary transition-all"><i data-lucide="send" class="w-4 h-4"></i></a>
+        </div>
+      </div>
+    </div>
+    
+    <div class="max-w-7xl mx-auto w-full border-t border-white/5 pt-6 text-center text-xs flex flex-col md:flex-row md:items-center justify-between gap-4">
+      <span>© 2026 SMC KH Academy. រក្សាសិទ្ធិគ្រប់យ៉ាងដោយវិទ្យាស្ថាន។</span>
+      <span class="text-primary font-bold">វិនិយោគលើចំណេះដឹង ការពារហានិភ័យជានិច្ច!</span>
+    </div>
+  </footer>
+
+  <!-- ========================================== -->
+  <!-- JAVASCRIPT DATABASE & ROUTER LOGIC         -->
+  <!-- ========================================== -->
+  <script>
+    // Backend Address
+    const BACKEND = window.location.protocol === 'file:' ? 'http://localhost:8000' : window.location.origin;
+
+    // Safeguard Lucide globally in case CDN fails to load
+    if (typeof window.lucide === 'undefined') {
+      window.lucide = {
+        createIcons: function() {
+          console.warn("Lucide library not loaded. Icon replacement skipped.");
+        }
+      };
+    }
+
+    let chatbotOpen = false;
+    let completedLessons = [];
+    let bookmarkedLessons = [];
+    
+    try {
+      completedLessons = JSON.parse(localStorage.getItem('completed_lessons')) || [];
+    } catch (e) {
+      console.warn("localStorage is not available for completed_lessons:", e);
+    }
+    
+    try {
+      bookmarkedLessons = JSON.parse(localStorage.getItem('bookmarked_lessons')) || [];
+    } catch (e) {
+      console.warn("localStorage is not available for bookmarked_lessons:", e);
+    }
+    
+    // Active Course Detail Modal Reference
+    let activeCourseIndex = 0;
+
+    // Course Catalogue Database
+    const coursesData = [
+      {
+        title: "Forex Beginner (មូលដ្ឋានគ្រឹះ)",
+        level: "BEGINNER",
+        duration: "6 ម៉ោង",
+        rating: "4.8",
+        price: "FREE",
+        image: "https://images.unsplash.com/photo-1611974789855-9c2a0a7236a3?auto=format&fit=crop&w=600&q=80",
+        desc: "រៀនយល់ដឹងពីអ្វីទៅជា Forex យន្តការ Pips/Points របៀបគណនា Lots របៀបបង្កើតគណនី MT5 និងការការពារការខាតបង់ SL & TP ក្នុងកម្រិតដំបូង។",
+        lessons: ["l1", "l2", "l3", "l4", "l5"]
+      },
+      {
+        title: "XAUUSD Masterclass (ជួញដូរមាស)",
+        level: "INTERMEDIATE",
+        duration: "10 ម៉ោង",
+        rating: "4.9",
+        price: "FREE",
+        image: "https://images.unsplash.com/photo-1610375461246-83df859d8222?auto=format&fit=crop&w=600&q=80",
+        desc: "វគ្គសិក្សាឯកទេសលើការវិភាគតម្លៃមាស XAUUSD ស្វែងយល់ពីរចនាសម្ព័ន្ធរលកទីផ្សារ កំពូល និងបាត HH/HL ព្រមទាំងពេលវេលា Kill Zones ជួញដូរមាសលម្អិត។",
+        lessons: ["l6", "l7", "l8", "l9", "l10", "l26"]
+      },
+      {
+        title: "Smart Money Concepts (SMC ពេញលេញ)",
+        level: "ADVANCED",
+        duration: "14 ម៉ោង",
+        rating: "5.0",
+        price: "FREE",
+        image: "https://images.unsplash.com/photo-1642543492481-44e81e3914a7?auto=format&fit=crop&w=600&q=80",
+        desc: "រៀនស្គាល់លំហូរសាច់ប្រាក់ស្ថាប័នធំ (Liquidity) របៀបសម្គាល់ Equal Highs/Lows ការទាញយកសាច់ប្រាក់ (Sweeps) និងការផ្លាស់ប្តូរទិសដៅ BOS & CHoCH។",
+        lessons: ["l11", "l12", "l13", "l14", "l15"]
+      },
+      {
+        title: "ICT institutional Trading (កម្រិតស្ថាប័ន)",
+        level: "ADVANCED",
+        duration: "12 ម៉ោង",
+        rating: "4.9",
+        price: "FREE",
+        image: "https://images.unsplash.com/photo-1590283603385-17ffb3a7f29f?auto=format&fit=crop&w=600&q=80",
+        desc: "ស្វែងយល់យុទ្ធសាស្ត្រ OTE (Optimal Trade Entry), Order Blocks, Breaker Blocks និងយន្តការ FVG (Fair Value Gap) ព្រមទាំងការគ្រប់គ្រង Time & Price របស់ ICT។",
+        lessons: ["l16", "l17", "l18", "l19", "l20"]
+      },
+      {
+        title: "Risk Management (គ្រប់គ្រងហានិភ័យ)",
+        level: "ALL LEVELS",
+        duration: "4 ម៉ោង",
+        rating: "4.8",
+        price: "FREE",
+        image: "https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?auto=format&fit=crop&w=600&q=80",
+        desc: "យុទ្ធសាស្ត្រគ្រប់គ្រងដើមទុន របៀបដាក់ SL ហានិភ័យត្រឹមតែ ១% ក្នុងមួយ trade និងការប្រើប្រាស់ R:R Ratio (Risk-to-Reward) ខ្ពស់ដើម្បីទទួលបានប្រាក់ចំណេញជាប្រចាំ។",
+        lessons: ["l21", "l22", "l23"]
+      },
+      {
+        title: "Trading Psychology (ចិត្តសាស្ត្រជួញដូរ)",
+        level: "ALL LEVELS",
+        duration: "5 ម៉ោង",
+        rating: "4.9",
+        price: "FREE",
+        image: "https://images.unsplash.com/photo-1506126613408-eca07ce68773?auto=format&fit=crop&w=600&q=80",
+        desc: "របៀបកម្ចាត់អារម្មណ៍ FOMO (ការខ្លាចបាត់ឱកាស) ការភ័យខ្លាចក្នុងការកាត់ខាត ចិត្តសាស្ត្រតស៊ូ និងការកត់ត្រា Journal ជួញដូរប្រចាំថ្ងៃដោយវិន័យខ្ពស់។",
+        lessons: ["l24", "l25"]
+      }
+    ];
+
+    // Complete Database of 25 Lessons with unique SVG illustrations and Quizzes
+    const lessonsData = [
+      {
+        id: "l1",
+        num: "មេរៀនទី ១",
+        title: "តើអ្វីទៅជា Forex?",
+        category: "basic",
+        meta: "FOREX BASICS",
+        summary: "សិក្សាពីការដោះដូររូបិយប័ណ្ណបរទេស និងយន្តការដំណើរការទីផ្សារ Forex",
+        sections: [
+          {
+            subtitle: "ការយល់ដឹងពីទីផ្សារ Forex",
+            content: "ទីផ្សារ Forex (Foreign Exchange) គឺជាទីផ្សារហិរញ្ញវត្ថុដ៏ធំបំផុតនៅលើពិភពលោក ដែលមានទំហំជួញដូរជាង ៧ ទ្រីលានដុល្លារក្នុងមួយថ្ងៃ។ វាជាកន្លែងដែលធនាគារ ស្ថាប័នហិរញ្ញវត្ថុ និង Trader ធ្វើការដោះដូររូបិយប័ណ្ណបរទេសធៀបនឹងគ្នាទៅវិញទៅមក។"
+          }
+        ],
+        diagram: `<svg viewBox="0 0 400 180" class="w-full h-40 bg-black/40 rounded-xl border border-white/5">
+          <circle cx="120" cy="90" r="30" fill="none" stroke="#FFD700" stroke-width="2" />
+          <text x="120" y="95" fill="#FFD700" text-anchor="middle" font-size="16" font-weight="bold">€ EUR</text>
+          <circle cx="280" cy="90" r="30" fill="none" stroke="#00B8FF" stroke-width="2" />
+          <text x="280" y="95" fill="#00B8FF" text-anchor="middle" font-size="16" font-weight="bold">$ USD</text>
+          <path d="M 160 90 L 240 90" stroke="#FFD700" stroke-width="2" stroke-dasharray="4" />
+          <text x="200" y="80" fill="#9CA3AF" text-anchor="middle" font-size="10">CURRENCY PAIR</text>
+        </svg>`,
+        caption: "រូបភាពបង្ហាញពីការជួញដូររូបិយប័ណ្ណគូ EUR/USD",
+        quiz: {
+          question: "តើទីផ្សារ Forex គឺជាទីផ្សារជួញដូរអ្វីខ្លះ?",
+          options: ["ដោះដូររូបិយប័ណ្ណបរទេស", "ទិញលក់ដីធ្លី", "ទិញលក់អង្ករ", "ទិញលក់ទំនិញកសិកម្ម"],
+          answer: 0
+        }
+      },
+      {
+        id: "l2",
+        num: "មេរៀនទី ២",
+        title: "តើអ្វីទៅជា XAUUSD?",
+        category: "basic",
+        meta: "GOLD FUNDAMENTALS",
+        summary: "ស្វែងយល់ការជួញដូរមាសធៀបនឹងដុល្លារអាមេរិក",
+        sections: [
+          {
+            subtitle: "មាស និងតម្លៃរបស់វា",
+            content: "XAU តំណាងឱ្យនិមិត្តសញ្ញារបស់មាសនៅលើផ្សារហិរញ្ញវត្ថុ (១ អោន) ចំណែក USD គឺដុល្លារអាមេរិក។ ការជួញដូរ XAUUSD គឺយើងកំពុងជួញដូរផលខុសគ្នាតម្លៃរវាងមាស និងដុល្លារ។"
+          }
+        ],
+        diagram: `<svg viewBox="0 0 400 180" class="w-full h-40 bg-black/40 rounded-xl border border-white/5">
+          <rect x="70" y="60" width="80" height="40" rx="4" fill="#FFD700" />
+          <text x="110" y="85" fill="#000" text-anchor="middle" font-weight="bold" font-size="12">GOLD (XAU)</text>
+          <rect x="250" y="60" width="80" height="40" rx="4" fill="#1b4d3e" stroke="#2e7d32" stroke-width="1.5" />
+          <text x="290" y="85" fill="#fff" text-anchor="middle" font-weight="bold" font-size="12">USD ($)</text>
+        </svg>`,
+        caption: "រូបភាពបង្ហាញការជួញដូរ XAU ធៀបនឹងដុល្លារអាមេរិក USD",
+        quiz: {
+          question: "តើ XAU នៅក្នុងគូជួញដូរ XAUUSD តំណាងឱ្យអ្វី?",
+          options: ["ដុល្លារ", "ប្រាក់", "មាស (Gold)", "ប្រេង"],
+          answer: 2
+        }
+      },
+      {
+        id: "l3",
+        num: "មេរៀនទី ៣",
+        title: "រចនាសម្ព័ន្ធទាន (Candlestick)",
+        category: "basic",
+        meta: "TECHNICAL CHARTING",
+        summary: "ស្គាល់រចនាសម្ព័ន្ធទានជួញដូរ Bullish និង Bearish",
+        sections: [
+          {
+            subtitle: "កាតយល់ដឹងពីទានជួញដូរ",
+            content: "ទាននីមួយៗបង្ហាញពីចលនាតម្លៃក្នុងរយៈពេលជាក់លាក់ណាមួយ (timeframe) ដូចជា 1H, 4H, 1D។ វាមានតួទាន (Body) និងកន្ទុយទាន (Wick) បង្ហាញពីតម្លៃខ្ពស់បំផុត និងទាបបំផុត។"
+          }
+        ],
+        diagram: `<svg viewBox="0 0 400 180" class="w-full h-40 bg-black/40 rounded-xl border border-white/5">
+          <line x1="120" y1="20" x2="120" y2="160" stroke="#10B981" stroke-width="2" />
+          <rect x="95" y="45" width="50" height="90" fill="#10B981" rx="2" />
+          <text x="120" y="15" fill="#10B981" font-size="9" text-anchor="middle">High</text>
+          <text x="120" y="172" fill="#10B981" font-size="9" text-anchor="middle">Low</text>
+          
+          <line x1="280" y1="20" x2="280" y2="160" stroke="#EF4444" stroke-width="2" />
+          <rect x="255" y="45" width="50" height="90" fill="#EF4444" rx="2" />
+          <text x="280" y="15" fill="#EF4444" font-size="9" text-anchor="middle">High</text>
+          <text x="280" y="172" fill="#EF4444" font-size="9" text-anchor="middle">Low</text>
+        </svg>`,
+        caption: "រចនាសម្ព័ន្ធទានឡើង Bullish (បៃតង) និងទានចុះ Bearish (ក្រហម)",
+        quiz: {
+          question: "តើផ្នែកណាខ្លះដែលបង្កើតជារូបរាងទានជួញដូរ (Candlestick)?",
+          options: ["ក្បាល និងបាត", "តួខ្លួន (Body) និងកន្ទុយ (Wick)", "ប្រអប់ និងបន្ទាត់", "គ្មានចម្លើយត្រឹមត្រូវ"],
+          answer: 1
+        }
+      },
+      {
+        id: "l4",
+        num: "មេរៀនទី ៤",
+        title: "Support & Resistance (ទ្រនាប់)",
+        category: "basic",
+        meta: "CHART LEVELS",
+        summary: "ស្វែងយល់អំពីខ្សែគាំទ្រ (Support) និងខ្សែរារាំង (Resistance)",
+        sections: [
+          {
+            subtitle: "ខ្សែទ្រនាប់ទីផ្សារ",
+            content: "Support (ខ្សែគាំទ្រ) គឺជាកម្រិតតម្លៃដែលទាប ដែលទីផ្សារពិបាកនឹងធ្លាក់ចុះបន្ថែមទៀត (កន្លែងមានកម្លាំងទិញ)។ Resistance (ខ្សែរារាំង) គឺជាកម្រិតតម្លៃខ្ពស់ដែលទីផ្សារពិបាកនឹងទម្លុះឡើងទៅលើ (កន្លែងមានកម្លាំងលក់)។"
+          }
+        ],
+        diagram: `<svg viewBox="0 0 400 180" class="w-full h-40 bg-black/40 rounded-xl border border-white/5">
+          <line x1="30" y1="40" x2="370" y2="40" stroke="#EF4444" stroke-width="1.5" stroke-dasharray="4" />
+          <text x="40" y="32" fill="#EF4444" font-size="10" font-weight="bold">RESISTANCE (រារាំង)</text>
+          <path d="M 50 140 L 110 40 L 170 140 L 230 40 L 290 140" fill="none" stroke="#FFD700" stroke-width="2" />
+          <line x1="30" y1="140" x2="370" y2="140" stroke="#10B981" stroke-width="1.5" stroke-dasharray="4" />
+          <text x="40" y="155" fill="#10B981" font-size="10" font-weight="bold">SUPPORT (គាំទ្រ)</text>
+        </svg>`,
+        caption: "រូបភាពតម្លៃលោតចុះឡើងចន្លោះ Support និង Resistance",
+        quiz: {
+          question: "តើ Support គឺជាតំបន់ដែលមានកម្លាំងអ្វីច្រើន?",
+          options: ["កម្លាំងលក់", "កម្លាំងទិញ (Buy Force)", "កម្លាំងស្ទាក់ស្ទើរ", "គ្មានចម្លើយត្រឹមត្រូវ"],
+          answer: 1
+        }
+      },
+      {
+        id: "l5",
+        num: "មេរៀនទី ៥",
+        title: "Trend Identification (និន្នាការ)",
+        category: "basic",
+        meta: "MARKET DIRECTION",
+        summary: "របៀបសម្គាល់និន្នាការទីផ្សារឡើង ចុះ ឬស្មើ",
+        sections: [
+          {
+            subtitle: "ទិសដៅទីផ្សារ",
+            content: "ទីផ្សារដំណើរការជា ៣ និន្នាការ៖ Uptrend (និន្នាការឡើង), Downtrend (និន្នាការចុះ) និង Sideways (ទីផ្សាររត់ស្មើ)។"
+          }
+        ],
+        diagram: `<svg viewBox="0 0 400 180" class="w-full h-40 bg-black/40 rounded-xl border border-white/5">
+          <path d="M 30 140 L 100 100 L 150 115 L 220 70 L 270 85 L 350 40" fill="none" stroke="#10B981" stroke-width="2" />
+          <text x="60" y="155" fill="#9CA3AF" font-size="10">Uptrend: បង្កើតកំពូលខ្ពស់ និងបាតខ្ពស់ជាងមុន</text>
+        </svg>`,
+        caption: "និន្នាការកើនឡើង (Uptrend) បង្កើតរលកឡើងលើ",
+        quiz: {
+          question: "តើទីផ្សារដែលកំពុងឡើងលើហៅថាអ្វី?",
+          options: ["Sideways", "Downtrend", "Uptrend", "Breakout"],
+          answer: 2
+        }
+      },
+      {
+        id: "l6",
+        num: "មេរៀនទី ៦",
+        title: "Market Structure (HH/HL/LH/LL)",
+        category: "basic",
+        meta: "STRUCTURE FUNDAMENTALS",
+        summary: "សិក្សាពីរចនាសម្ព័ន្ធរលកកំពូលខ្ពស់ និងបាតទាប",
+        sections: [
+          {
+            subtitle: "កំពូល និងបាតរលក",
+            content: "ក្នុងទីផ្សារ Uptrend តម្លៃបង្កើតកំពូលខ្ពស់ជាងមុន Higher High (HH) និងបាតខ្ពស់ជាងមុន Higher Low (HL)។ ចំណែកទីផ្សារ Downtrend បង្កើត Lower High (LH) និង Lower Low (LL)។"
+          }
+        ],
+        diagram: `<svg viewBox="0 0 400 180" class="w-full h-40 bg-black/40 rounded-xl border border-white/5">
+          <path d="M 40 140 L 100 80 L 130 110 L 200 50 L 230 80 L 300 20" fill="none" stroke="#FFB800" stroke-width="2" />
+          <circle cx="100" cy="80" r="4" fill="#FFD700" />
+          <text x="100" y="70" fill="#FFD700" font-size="9" text-anchor="middle">HH</text>
+          <circle cx="130" cy="110" r="4" fill="#FFD700" />
+          <text x="130" y="125" fill="#FFD700" font-size="9" text-anchor="middle">HL</text>
+        </svg>`,
+        caption: "រូបភាពបង្ហាញពីចលនា HH និង HL ក្នុងទីផ្សារនិន្នាការឡើង",
+        quiz: {
+          question: "តើ HH តំណាងឱ្យពាក្យបច្ចេកទេសអ្វី?",
+          options: ["Higher High", "Higher Low", "Lower High", "Lower Low"],
+          answer: 0
+        }
+      },
+      {
+        id: "l7",
+        num: "មេរៀនទី ៧",
+        title: "Liquidity (BSL / SSL)",
+        category: "smc",
+        meta: "SMART MONEY CONCEPTS",
+        summary: "ស្វែងយល់ពីតំបន់សាច់ប្រាក់ Stop Loss របស់ Trader ទូទៅ",
+        sections: [
+          {
+            subtitle: "សាច់ប្រាក់ក្នុងទីផ្សារ",
+            content: "Liquidity គឺជាតំបន់ដែលមានការដាក់ Stop Loss យ៉ាងច្រើនកុះករ។ BSL (Buy-Side Liquidity) ស្ថិតនៅខាងលើកំពូលតម្លៃចាស់ ចំណែក SSL (Sell-Side Liquidity) ស្ថិតនៅខាងក្រោមបាតតម្លៃចាស់។"
+          }
+        ],
+        diagram: `<svg viewBox="0 0 400 180" class="w-full h-40 bg-black/40 rounded-xl border border-white/5">
+          <line x1="50" y1="60" x2="350" y2="60" stroke="#EF4444" stroke-width="1" stroke-dasharray="3" />
+          <text x="200" y="50" fill="#EF4444" font-size="10" text-anchor="middle">$$$ Buy-side Liquidity (BSL) $$$</text>
+          <path d="M 60 120 L 120 60 L 180 130 L 240 60 C 270 60 300 30 320 80" fill="none" stroke="#FFD700" stroke-width="2" />
+        </svg>`,
+        caption: "រូបភាព BSL ដែលស្ថិតនៅពីលើកំពូលចាស់ៗ",
+        quiz: {
+          question: "តើ SSL (Sell-side Liquidity) ស្ថិតនៅតំបន់ណា?",
+          options: ["ខាងលើកំពូលចាស់", "ខាងក្រោមបាតចាស់ (Below Old Lows)", "នៅចំកណ្តាលទាន", "គ្មានចម្លើយត្រឹមត្រូវ"],
+          answer: 1
+        }
+      },
+      {
+        id: "l8",
+        num: "មេរៀនទី ៨",
+        title: "Equal High (EQH)",
+        category: "smc",
+        meta: "LIQUIDITY POOLS",
+        summary: "ស្វែងយល់ពីរចនាសម្ព័ន្ធកំពូលពីរស្មើគ្នាដែលបង្កើត BSL",
+        sections: [
+          {
+            subtitle: "កំពូលស្មើ និងសាច់ប្រាក់ BSL",
+            content: "នៅពេលតម្លៃបង្កើតកំពូលពីរស្មើគ្នា (Double Top) នោះ Trader ទូទៅយល់ថាជា Resistance ខ្លាំង ហើយចូល Sell រួចដាក់ SL នៅខាងលើនោះ។ នេះបង្កើតជា Equal Highs (EQH) ដែលជាគោលដៅទាក់ទាញតម្លៃរបស់ធនាគារ។"
+          }
+        ],
+        diagram: `<svg viewBox="0 0 400 180" class="w-full h-40 bg-black/40 rounded-xl border border-white/5">
+          <line x1="50" y1="50" x2="350" y2="50" stroke="#EF4444" stroke-width="1.5" stroke-dasharray="2" />
+          <path d="M 60 150 L 120 50 L 180 110 L 240 50 L 300 160" fill="none" stroke="#FFB800" stroke-width="2" />
+          <text x="200" y="40" fill="#EF4444" font-size="10" text-anchor="middle">Equal Highs (EQH) - BSL Target</text>
+        </svg>`,
+        caption: "EQH បង្កើតជាតំបន់ BSL (លំហូរសាច់ប្រាក់)",
+        quiz: {
+          question: "តើធនាគារធំៗចូលចិត្តធ្វើអ្វីចំពោះតំបន់ EQH?",
+          options: ["គោរពតម្លៃហើយត្រឡប់ក្រោយ", "បាញ់ទម្លាយដើម្បីស៊ី SL (Grab Liquidity)", "ឈប់ជួញដូរ", "គ្មានចម្លើយត្រឹមត្រូវ"],
+          answer: 1
+        }
+      },
+      {
+        id: "l9",
+        num: "មេរៀនទី ៩",
+        title: "Equal Low (EQL)",
+        category: "smc",
+        meta: "LIQUIDITY POOLS",
+        summary: "ស្វែងយល់ពីរចនាសម្ព័ន្ធបាតពីរស្មើគ្នាដែលបង្កើត SSL",
+        sections: [
+          {
+            subtitle: "បាតស្មើ និងសាច់ប្រាក់ SSL",
+            content: "ផ្ទុយពី EQH, នៅពេលតម្លៃបង្កើតបាតពីរស្មើគ្នា (Double Bottom) នោះ Trader ភាគច្រើនចូល Buy រួចដាក់ SL នៅខាងក្រោមបាត។ នេះបង្កើតជា EQL (Equal Lows) ដែលជាសាច់ប្រាក់ SSL ទាក់ទាញតម្លៃឱ្យធ្លាក់ចុះមកស៊ី SL។"
+          }
+        ],
+        diagram: `<svg viewBox="0 0 400 180" class="w-full h-40 bg-black/40 rounded-xl border border-white/5">
+          <line x1="50" y1="130" x2="350" y2="130" stroke="#EF4444" stroke-width="1.5" stroke-dasharray="2" />
+          <path d="M 60 30 L 120 130 L 180 70 L 240 130 L 300 40" fill="none" stroke="#FFB800" stroke-width="2" />
+          <text x="200" y="145" fill="#EF4444" font-size="10" text-anchor="middle">Equal Lows (EQL) - SSL Target</text>
+        </svg>`,
+        caption: "EQL បង្កើតជាតំបន់ SSL (លំហូរសាច់ប្រាក់)",
+        quiz: {
+          question: "តើ Equal Lows បង្កើតជាតំបន់លំហូរសាច់ប្រាក់អ្វី?",
+          options: ["BSL", "SSL (Sell-Side Liquidity)", "Support", "Divergence"],
+          answer: 1
+        }
+      },
+      {
+        id: "l10",
+        num: "មេរៀនទី ១០",
+        title: "Liquidity Sweep",
+        category: "smc",
+        meta: "MARKET MANIPULATION",
+        summary: "ការបោកប្រាស់តម្លៃដើម្បីទាញយកសាច់ប្រាក់របស់ធនាគារ",
+        sections: [
+          {
+            subtitle: "សកម្មភាព Sweep បោករុករក SL",
+            content: "Liquidity Sweep គឺជាបាតុភូតដែលតម្លៃរត់ទៅធ្លាយកំពូល ឬបាតចាស់បន្តិច ដើម្បីស៊ី SL របស់ Trader ឱ្យអស់ រួចក៏បត់ទិសដៅភ្លាមៗឡើងលើ ឬចុះក្រោមយ៉ាងលឿន បន្សល់ទុកកន្ទុយទានវែង។"
+          }
+        ],
+        diagram: `<svg viewBox="0 0 400 180" class="w-full h-40 bg-black/40 rounded-xl border border-white/5">
+          <line x1="50" y1="120" x2="350" y2="120" stroke="#444" stroke-width="1" />
+          <path d="M 60 50 L 120 120 L 180 60 L 240 120 L 280 145 L 320 30" fill="none" stroke="#FFD700" stroke-width="2" />
+          <circle cx="280" cy="145" r="5" fill="#EF4444" />
+          <text x="280" y="160" fill="#EF4444" font-size="9" text-anchor="middle">Sweep (ស៊ី SL)</text>
+        </svg>`,
+        caption: "តម្លៃចុះមកធ្លាយបាតចាស់ (Sweep) រួចបាញ់ឡើងលើវិញយ៉ាងលឿន",
+        quiz: {
+          question: "តើទម្រង់ទានបែបណាដែលជាសញ្ញាបញ្ជាក់ពីការធ្វើ Liquidity Sweep?",
+          options: ["ទានមានតួខ្លួនធំគ្មានកន្ទុយ", "ទានបន្សល់ទុកកន្ទុយវែងខ្លាំង (Pinbar/Wick rejection)", "ទានតូចៗរត់ស្មើគ្នា", "គ្មានចម្លើយត្រឹមត្រូវ"],
+          answer: 1
+        }
+      },
+      {
+        id: "l11",
+        num: "មេរៀនទី ១១",
+        title: "Break of Structure (BOS)",
+        category: "smc",
+        meta: "TREND CONTINUATION",
+        summary: "របៀបសម្គាល់ការបន្តនិន្នាការទីផ្សារ",
+        sections: [
+          {
+            subtitle: "ការបន្តនិន្នាការទីផ្សារ BOS",
+            content: "BOS (Break of Structure) កើតឡើងនៅពេលតម្លៃបន្តរុញទៅទិសដៅចាស់ ដោយបំបែកកំពូលខ្ពស់ចាស់ (ក្នុង Uptrend) ឬបំបែកបាតទាបចាស់ (ក្នុង Downtrend) ដោយជោគជ័យ។"
+          }
+        ],
+        diagram: `<svg viewBox="0 0 400 180" class="w-full h-40 bg-black/40 rounded-xl border border-white/5">
+          <path d="M 40 140 L 120 80 L 160 110 L 240 50 L 280 80 L 350 20" fill="none" stroke="#FFB800" stroke-width="2" />
+          <line x1="120" y1="80" x2="240" y2="80" stroke="#10B981" stroke-width="1.5" stroke-dasharray="3" />
+          <text x="180" y="72" fill="#10B981" font-size="9" text-anchor="middle">BOS</text>
+        </svg>`,
+        caption: "តម្លៃឡើងបំបែកកំពូលចាស់ បង្កើតបានជា BOS (Uptrend)",
+        quiz: {
+          question: "តើ BOS (Break of Structure) ជាសញ្ញាបង្ហាញពីអ្វី?",
+          options: ["ការបត់ត្រឡប់ក្រោយនៃទីផ្សារ", "ការបន្តនិន្នាការចាស់ (Trend Continuation)", "ទីផ្សារឈប់ដំណើរការ", "គ្មានចម្លើយត្រឹមត្រូវ"],
+          answer: 1
+        }
+      },
+      {
+        id: "l12",
+        num: "មេរៀនទី ១២",
+        title: "Change of Character (CHoCH)",
+        category: "smc",
+        meta: "TREND REVERSAL",
+        summary: "របៀបសម្គាល់ចំណុចចាប់ផ្ដើមបត់ទិសដៅនៃទីផ្សារ",
+        sections: [
+          {
+            subtitle: "ការផ្លាស់ប្តូរចរិតលក្ខណៈតម្លៃ CHoCH",
+            content: "CHoCH (Change of Character) គឺជាការបំបែករចនាសម្ព័ន្ធបាតចុងក្រោយបង្អស់ (ក្នុង Uptrend) ឬកំពូលចុងក្រោយបង្អស់ (ក្នុង Downtrend) ដែលជាសញ្ញាបញ្ជាក់ថានិន្នាការទីផ្សារចាប់ផ្ដើមបត់បញ្ច្រាសទិសហើយ។"
+          }
+        ],
+        diagram: `<svg viewBox="0 0 400 180" class="w-full h-40 bg-black/40 rounded-xl border border-white/5">
+          <path d="M 40 140 L 100 80 L 140 110 L 200 50 L 240 130 C 260 130 280 150 320 160" fill="none" stroke="#FFB800" stroke-width="2" />
+          <line x1="140" y1="110" x2="240" y2="110" stroke="#EF4444" stroke-width="1.5" stroke-dasharray="3" />
+          <text x="190" y="102" fill="#EF4444" font-size="9" text-anchor="middle">CHoCH (បំបែក HL)</text>
+        </svg>`,
+        caption: "តម្លៃចុះមកធ្លាយបាត HL ចុងក្រោយ បង្កើតបានជា CHoCH និន្នាការបត់ចុះ",
+        quiz: {
+          question: "តើ CHoCH ខុសពី BOS យ៉ាងដូចម្តេច?",
+          options: ["CHoCH ជាសញ្ញាបត់ទិសដៅ (Reversal) ចំណែក BOS ជាសញ្ញាបន្តនិន្នាការ", "CHoCH ដូចគ្នានឹង BOS គ្មានខុសគ្នាទេ", "BOS កើតឡើងមុន CHoCH ជានិច្ច", "គ្មានចម្លើយត្រឹមត្រូវ"],
+          answer: 0
+        }
+      },
+      {
+        id: "l13",
+        num: "មេរៀនទី ១៣",
+        title: "Order Block (OB)",
+        category: "smc",
+        meta: "INSTITUTIONAL ZONES",
+        summary: "ស្វែងយល់ពីតំបន់បញ្ជាទិញលក់ធំរបស់ធនាគារ",
+        sections: [
+          {
+            subtitle: "តំបន់ស្ថាប័ន Order Block",
+            content: "Bullish Order Block គឺជាទាន Bearish ចុងក្រោយបង្អស់មុនពេលតម្លៃឡើងខ្លាំង។ Bearish Order Block គឺជាទាន Bullish ចុងក្រោយបង្អស់មុនពេលតម្លៃធ្លាក់ចុះខ្លាំង។ តំបន់ទាំងនេះគឺជាកន្លែងដែលធនាគារបន្សល់ទុក Order ទិញលក់របស់ខ្លួន។"
+          }
+        ],
+        diagram: `<svg viewBox="0 0 400 180" class="w-full h-40 bg-black/40 rounded-xl border border-white/5">
+          <rect x="50" y="80" width="70" height="50" fill="rgba(239, 68, 68, 0.2)" stroke="#EF4444" />
+          <text x="85" y="110" fill="#EF4444" font-size="9" text-anchor="middle">Bearish Candle</text>
+          <path d="M 120 100 L 180 40 L 240 20" fill="none" stroke="#10B981" stroke-width="2" />
+          <rect x="220" y="80" width="100" height="50" fill="rgba(255, 215, 0, 0.1)" stroke="#FFD700" stroke-dasharray="2" />
+          <text x="270" y="110" fill="#FFD700" font-size="9" text-anchor="middle">OB MITIGATION</text>
+        </svg>`,
+        caption: "រូបភាពបង្ហាញពីការវិលត្រឡប់មកតេស្តតំបន់ Order Block (Mitigation)",
+        quiz: {
+          question: "តើ Bullish Order Block គឺជាអ្វី?",
+          options: ["ទានឡើងចុងក្រោយ", "ទានចុះចុងក្រោយបង្អស់មុនតម្លៃឡើងខ្លាំង (Last Down Candle)", "ទានតូចបំផុត", "គ្មានចម្លើយត្រឹមត្រូវ"],
+          answer: 1
+        }
+      },
+      {
+        id: "l14",
+        num: "មេរៀនទី ១៤",
+        title: "Breaker Block",
+        category: "smc",
+        meta: "FAILED ORDER BLOCKS",
+        summary: "ស្វែងយល់ពី Order Block ដែលត្រូវបានតម្លៃទម្លាយ",
+        sections: [
+          {
+            subtitle: "របៀបប្រើប្រាស់ Breaker Block",
+            content: "នៅពេលដែល Order Block មួយត្រូវបានតម្លៃទម្លាយដោយគ្មានការគោរព តំបន់នោះនឹងប្តូរមុខងារពីទប់តម្លៃឱ្យឡើង មកជាទប់តម្លៃឱ្យចុះវិញ (ឬផ្ទុយទៅវិញ)។ នេះហៅថា Breaker Block។"
+          }
+        ],
+        diagram: `<svg viewBox="0 0 400 180" class="w-full h-40 bg-black/40 rounded-xl border border-white/5">
+          <rect x="80" y="60" width="80" height="40" fill="rgba(255,215,0,0.1)" stroke="#FFD700" />
+          <text x="120" y="85" fill="#FFD700" font-size="9" text-anchor="middle">Failed OB</text>
+          <path d="M 50 80 L 160 80 L 180 140 L 240 80 L 300 120" fill="none" stroke="#EF4444" stroke-width="2" />
+        </svg>`,
+        caption: "OB ត្រូវទម្លាយ ហើយក្លាយទៅជាតំបន់ទប់តម្លៃចុះក្រោម (Breaker)",
+        quiz: {
+          question: "តើ Breaker Block កើតឡើងនៅពេលណា?",
+          options: ["នៅពេល OB ដំណើរការបានល្អ", "នៅពេល OB ត្រូវបានតម្លៃទម្លាយ (Broken OB)", "នៅពេលគ្មានសាច់ប្រាក់", "គ្មានចម្លើយត្រឹមត្រូវ"],
+          answer: 1
+        }
+      },
+      {
+        id: "l15",
+        num: "មេរៀនទី ១៥",
+        title: "Mitigation Block",
+        category: "smc",
+        meta: "FAILED STRUCTURE RE-TEST",
+        summary: "ស្វែងយល់ពីការទប់តម្លៃឡើងវិញដោយគ្មានការ Sweep BSL/SSL",
+        sections: [
+          {
+            subtitle: "ភាពខុសគ្នានៃ Mitigation Block",
+            content: "Mitigation Block ស្រដៀងទៅនឹង Breaker Block ដែរ ប៉ុន្តែវាខុសគ្នាត្រង់ថា មុនពេលវាត្រូវបានទម្លាយ តម្លៃមិនបានបង្កើតការ Sweep យកសាច់ប្រាក់ (Liquidity Grab) នោះទេ។"
+          }
+        ],
+        diagram: `<svg viewBox="0 0 400 180" class="w-full h-40 bg-black/40 rounded-xl border border-white/5">
+          <path d="M 50 120 L 120 60 L 160 90 L 220 30" fill="none" stroke="#FFB800" stroke-width="2" />
+          <rect x="110" y="60" width="60" height="30" fill="rgba(255,255,255,0.05)" stroke="#9CA3AF" />
+          <text x="140" y="78" fill="#9CA3AF" font-size="8" text-anchor="middle">Mitigation Zone</text>
+        </svg>`,
+        caption: "រូបភាពរចនាសម្ព័ន្ធ Mitigation Block",
+        quiz: {
+          question: "តើចរិតលក្ខណៈពិសេសរបស់ Mitigation Block គឺជាអ្វី?",
+          options: ["មិនមានការ Sweep យកសាច់ប្រាក់ (No Liquidity Sweep)", "មានការ Sweep សាច់ប្រាក់", "តម្លៃបាញ់ខ្លាំង", "គ្មានចម្លើយត្រឹមត្រូវ"],
+          answer: 0
+        }
+      },
+      {
+        id: "l16",
+        num: "មេរៀនទី ១៦",
+        title: "Fair Value Gap (FVG)",
+        category: "smc",
+        meta: "IMBALANCE ZONES",
+        summary: "ស្វែងយល់ពីកង្វះតុល្យភាពតម្លៃនៅក្នុងទីផ្សារ",
+        sections: [
+          {
+            subtitle: "តុល្យភាពតម្លៃ FVG",
+            content: "FVG កើតឡើងនៅពេលមានទានធំមួយរត់យ៉ាងលឿន បង្កើតឱ្យមានចន្លោះទំនេររវាងកន្ទុយទានទី១ និងកន្ទុយទានទី៣។ ធនាគារនឹងរុញតម្លៃឱ្យត្រឡប់មកបំពេញចន្លោះទំនេរនេះវិញ (Imbalance Fill) មុននឹងបន្តដំណើរ។"
+          }
+        ],
+        diagram: `<svg viewBox="0 0 400 180" class="w-full h-40 bg-black/40 rounded-xl border border-white/5">
+          <rect x="60" y="60" width="30" height="40" fill="#10B981" />
+          <rect x="100" y="30" width="30" height="120" fill="#10B981" />
+          <rect x="140" y="110" width="30" height="40" fill="#10B981" />
+          <rect x="100" y="100" width="30" height="10" fill="rgba(255, 215, 0, 0.3)" stroke="#FFD700" />
+          <text x="210" y="105" fill="#FFD700" font-size="10">Imbalance / FVG Zone</text>
+        </svg>`,
+        caption: "ចន្លោះប្រហោងកណ្តាល (FVG) រវាងទានទី១ និងទានទី៣",
+        quiz: {
+          question: "តើ FVG កើតឡើងដោយសារអ្វី?",
+          options: ["ចលនាយឺតៗ", "កង្វះតុល្យភាពកម្លាំងទិញលក់លឿនខ្លាំង (Market Imbalance)", "ទីផ្សាររត់ស្មើ", "គ្មានចម្លើយត្រឹមត្រូវ"],
+          answer: 1
+        }
+      },
+      {
+        id: "l17",
+        num: "មេរៀនទី ១៧",
+        title: "Premium vs Discount Zones",
+        category: "smc",
+        meta: "FIBONACCI LEVELS",
+        summary: "របៀបវាស់ស្ទង់តម្លៃថ្លៃ និងតម្លៃថោកដើម្បីជួញដូរ",
+        sections: [
+          {
+            subtitle: "តំបន់ទិញថោក លក់ថ្លៃ",
+            content: "យើងប្រើប្រាស់ឧបករណ៍ Fibonacci Retracement ពីបាតទៅកំពូល។ តំបន់ខាងលើ ៥០% ហៅថា Premium (តម្លៃថ្លៃ - សម្រាប់រកឱកាស Sell) ចំណែកខាងក្រោម ៥០% ហៅថា Discount (តម្លៃថោក - សម្រាប់រកឱកាស Buy)។"
+          }
+        ],
+        diagram: `<svg viewBox="0 0 400 180" class="w-full h-40 bg-black/40 rounded-xl border border-white/5">
+          <rect x="50" y="30" width="300" height="50" fill="rgba(239, 68, 68, 0.1)" stroke="#EF4444" />
+          <text x="200" y="60" fill="#EF4444" font-size="12" text-anchor="middle">PREMIUM ZONE (លក់ថ្លៃ)</text>
+          <line x1="50" y1="80" x2="350" y2="80" stroke="#FFD700" stroke-width="2" />
+          <text x="200" y="95" fill="#FFD700" font-size="10" text-anchor="middle">50% EQUILIBRIUM</text>
+          <rect x="50" y="100" width="300" height="50" fill="rgba(16, 185, 129, 0.1)" stroke="#10B981" />
+          <text x="200" y="130" fill="#10B981" font-size="12" text-anchor="middle">DISCOUNT ZONE (ទិញថោក)</text>
+        </svg>`,
+        caption: "ការបែងចែកតំបន់តម្លៃស្មើ ៥០% (Equilibrium), Premium និង Discount",
+        quiz: {
+          question: "តើយើងគួរ Buy នៅតំបន់មួយណា?",
+          options: ["Premium Zone", "Discount Zone (តម្លៃថោក)", "លក់នៅកន្លែងណាដាក៏បាន", "គ្មានចម្លើយត្រឹមត្រូវ"],
+          answer: 1
+        }
+      },
+      {
+        id: "l18",
+        num: "មេរៀនទី ១៨",
+        title: "Optimal Trade Entry (OTE)",
+        category: "smc",
+        meta: "FIBONACCI ADVANCED",
+        summary: "ស្វែងយល់ពីកម្រិតវាស់ស្ទង់ Fibonacci ល្អបំផុត OTE",
+        sections: [
+          {
+            subtitle: "តំបន់ OTE សម្រាប់ដើមទុនតូច",
+            content: "OTE គឺជាតំបន់ចន្លោះកម្រិត Fibonacci 0.62 និង 0.79។ នេះជាកម្រិតដែលតម្លៃបានចុះមកថោកបំផុត និងមានអត្រាជោគជ័យខ្ពស់បំផុតក្នុងការបើក Order Buy ត្រឡប់ឡើងលើវិញ។"
+          }
+        ],
+        diagram: `<svg viewBox="0 0 400 180" class="w-full h-40 bg-black/40 rounded-xl border border-white/5">
+          <rect x="50" y="90" width="300" height="30" fill="rgba(255, 215, 0, 0.2)" />
+          <text x="200" y="110" fill="#FFD700" font-size="10" text-anchor="middle">OTE ZONE (0.62 - 0.79)</text>
+          <path d="M 60 150 L 180 40 L 260 100 L 340 20" fill="none" stroke="#FFF" stroke-width="1.5" />
+        </svg>`,
+        caption: "រូបភាពបង្ហាញពីការលោតត្រឡប់ថយក្រោយបុកតំបន់ OTE",
+        quiz: {
+          question: "តើកម្រិត Fibonacci មួយណាជាតំបន់ OTE?",
+          options: ["0.23 - 0.38", "0.62 - 0.79", "0.90 - 1.00", "0.50 គត់"],
+          answer: 1
+        }
+      },
+      {
+        id: "l19",
+        num: "មេរៀនទី ១៩",
+        title: "Kill Zone (London / New York)",
+        category: "smc",
+        meta: "TIME & PRICE ANALYSIS",
+        summary: "ស្វែងយល់ពីម៉ោងមាសសម្រាប់ប្រតិបត្តិការជួញដូរ XAUUSD",
+        sections: [
+          {
+            subtitle: "ម៉ោងជួញដូរសកម្មបំផុត",
+            content: "ទីផ្សារមានម៉ោង Kill Zones សំខាន់ៗ៖ London Kill Zone (ម៉ោង ២:០០ រសៀល - ៥:០០ ល្ងាច ម៉ោងនៅខ្មែរ) និង New York Kill Zone (ម៉ោង ៧:០០ យប់ - ១០:០០ យប់ ម៉ោងនៅខ្មែរ) ដែលមានចលនាតម្លៃមាសខ្លាំងបំផុត។"
+          }
+        ],
+        diagram: `<svg viewBox="0 0 400 180" class="w-full h-40 bg-black/40 rounded-xl border border-white/5">
+          <rect x="80" y="40" width="100" height="100" fill="rgba(0, 184, 255, 0.1)" stroke="#00B8FF" />
+          <text x="130" y="32" fill="#00B8FF" font-size="10" text-anchor="middle">LONDON KZ</text>
+          <rect x="220" y="40" width="100" height="100" fill="rgba(255, 184, 0, 0.1)" stroke="#FFB800" />
+          <text x="270" y="32" fill="#FFB800" font-size="10" text-anchor="middle">NEW YORK KZ</text>
+        </svg>`,
+        caption: "ពេលវេលា Kill Zones ទាំងពីរដែលមានសកម្មភាពទិញលក់ច្រើន",
+        quiz: {
+          question: "តើ New York Kill Zone ត្រូវនឹងម៉ោងប៉ុន្មាននៅប្រទេសកម្ពុជា?",
+          options: ["ម៉ោង ៨ ព្រឹក - ម៉ោង ១១ ព្រឹក", "ម៉ោង ២ រសៀល - ម៉ោង ៥ ល្ងាច", "ម៉ោង ៧ យប់ - ម៉ោង ១០ យប់", "ម៉ោង ១២ យប់"],
+          answer: 2
+        }
+      },
+      {
+        id: "l20",
+        num: "មេរៀនទី ២០",
+        title: "Power of 3 (PO3)",
+        category: "smc",
+        meta: "MARKET CYCLES",
+        summary: "ស្វែងយល់ពីរង្វិលជុំចលនាតម្លៃប្រចាំថ្ងៃ",
+        sections: [
+          {
+            subtitle: "រចនាសម្ព័ន្ធ PO3",
+            content: "PO3 ពិពណ៌នាអំពីដំណាក់កាល៣ នៃទានជួញដូរប្រចាំថ្ងៃ៖ Accumulation (ប្រមូលសាច់ប្រាក់), Manipulation (បោកបញ្ឆោតរុញតម្លៃទៅទិសផ្ទុយ), Distribution (រុញតម្លៃទៅរកទិសដៅពិតប្រាកដ)។"
+          }
+        ],
+        diagram: `<svg viewBox="0 0 400 180" class="w-full h-40 bg-black/40 rounded-xl border border-white/5">
+          <rect x="50" y="80" width="80" height="30" fill="rgba(255,255,255,0.05)" stroke="#9CA3AF" />
+          <text x="90" y="100" fill="#9CA3AF" font-size="9" text-anchor="middle">Accumulation</text>
+          <path d="M 130 95 L 180 140 L 280 40 L 320 60" fill="none" stroke="#FFD700" stroke-width="2" />
+          <text x="180" y="155" fill="#EF4444" font-size="9" text-anchor="middle">Manipulation</text>
+          <text x="260" y="30" fill="#10B981" font-size="9" text-anchor="middle">Distribution</text>
+        </svg>`,
+        caption: "រូបភាពបង្ហាញពីដំណាក់កាលទាំងបីរបស់ PO3",
+        quiz: {
+          question: "តើ Manipulation នៅក្នុង PO3 មានតួនាទីអ្វី?",
+          options: ["ប្រមូលសាច់ប្រាក់", "បោកបញ្ឆោតស៊ី SL មុននឹងចេញដំណើរពិតប្រាកដ", "ទាញយកប្រាក់ចំណេញ", "គ្មានចម្លើយត្រឹមត្រូវ"],
+          answer: 1
+        }
+      },
+      {
+        id: "l21",
+        num: "មេរៀនទី ២១",
+        title: "AMD (Accumulation, Manipulation, Distribution)",
+        category: "smc",
+        meta: "MARKET CYCLES ADVANCED",
+        summary: "យុទ្ធសាស្ត្រជួញដូរតាមលំនាំបោកបញ្ឆោត AMD",
+        sections: [
+          {
+            subtitle: "របៀប Trade តាមលំនាំ AMD",
+            content: "យើងរង់ចាំទីផ្សារបង្កើតការរត់ Sideways ក្នុងវគ្គអាស៊ី (Accumulation)។ បន្ទាប់មក វគ្គឡុងដ៍បាញ់ទម្លាយបញ្ឆោតចុះក្រោម (Manipulation)។ យើងនឹងស្វែងរកឱកាស Buy នៅបាតខាងក្រោមនោះ ដើម្បីចាប់រលកឡើងលើធំ (Distribution) ក្នុងវគ្គញូយ៉ក។"
+          }
+        ],
+        diagram: `<svg viewBox="0 0 400 180" class="w-full h-40 bg-black/40 rounded-xl border border-white/5">
+          <rect x="50" y="70" width="100" height="40" fill="rgba(255,255,255,0.05)" stroke="#64748B" />
+          <text x="100" y="95" fill="#94A3B8" font-size="9" text-anchor="middle">ASIA RANGE (A)</text>
+          <path d="M 150 90 L 190 140 L 320 40" fill="none" stroke="#FFD700" stroke-width="2" />
+          <text x="190" y="155" fill="#EF4444" font-size="9" text-anchor="middle">LONDON SWEEP (M)</text>
+          <text x="280" y="30" fill="#10B981" font-size="9" text-anchor="middle">NY TREND (D)</text>
+        </svg>`,
+        caption: "យុទ្ធសាស្ត្រ AMD របស់ ICT ក្នុងការជួញដូរមាសប្រចាំថ្ងៃ",
+        quiz: {
+          question: "តើវគ្គណាដែលជាទូទៅបង្កើតដំណាក់កាល Accumulation (A)?",
+          options: ["វគ្គ New York", "វគ្គ London", "វគ្គ Asian Session (ម៉ោងអាស៊ី)", "គ្មានចម្លើយត្រឹមត្រូវ"],
+          answer: 2
+        }
+      },
+      {
+        id: "l22",
+        num: "មេរៀនទី ២២",
+        title: "SMT Divergence",
+        category: "smc",
+        meta: "ADVANCED SMC",
+        summary: "ស្វែងយល់ពីភាពផ្ទុយគ្នាតម្លៃរវាងគូជួញដូរប្រហាក់ប្រហែលគ្នា",
+        sections: [
+          {
+            subtitle: "ការប្រើប្រាស់ SMT Divergence",
+            content: "SMT Divergence កើតឡើងនៅពេលគូជួញដូរពីរដែលដើរស្របគ្នា (ឧទាហរណ៍ EURUSD និង GBPUSD) បង្ហាញសកម្មភាពផ្ទុយគ្នាត្រង់កំពូល ឬបាតចុងក្រោយ។ វាជាសញ្ញាបញ្ជាក់ពីការទិញលក់លាក់កំបាំងរបស់ធនាគារធំ។"
+          }
+        ],
+        diagram: `<svg viewBox="0 0 400 180" class="w-full h-40 bg-black/40 rounded-xl border border-white/5">
+          <path d="M 50 140 L 120 70 L 160 110 L 230 40" fill="none" stroke="#10B981" stroke-width="1.5" />
+          <text x="60" y="60" fill="#10B981" font-size="8">EURUSD - បង្កើត Higher High</text>
+          
+          <path d="M 50 160 L 120 100 L 160 130 L 210 110" fill="none" stroke="#EF4444" stroke-width="1.5" />
+          <text x="60" y="120" fill="#EF4444" font-size="8">GBPUSD - បង្កើត Lower High (SMT)</text>
+        </svg>`,
+        caption: "រូបភាពបង្ហាញពីការខុសគ្នាចលនាតម្លៃ (SMT Divergence)",
+        quiz: {
+          question: "តើ SMT Divergence ជួយបញ្ជាក់សញ្ញាអ្វីខ្លះ?",
+          options: ["ការបត់ទិសដៅ ឬកម្លាំងទីផ្សារពិត (Market Strength)", "ទីផ្សាររត់ស្មើ", "គ្មានប្រយោជន៍អ្វីទេ", "គ្មានចម្លើយត្រឹមត្រូវ"],
+          answer: 0
+        }
+      },
+      {
+        id: "l23",
+        num: "មេរៀនទី ២៣",
+        title: "Risk Management (១% ហានិភ័យ)",
+        category: "risk",
+        meta: "CAPITAL PROTECTION",
+        summary: "ការគ្រប់គ្រងដើមទុន និងការពារគណនីជួញដូរ",
+        sections: [
+          {
+            subtitle: "ច្បាប់ Risk 1% ដ៏មានឥទ្ធិពល",
+            content: "អ្នកមិនត្រូវដាក់ហានិភ័យលើសពី ១% ទៅ ២% នៃគណនីសរុបរបស់អ្នកក្នុងមួយ Trade ឡើយ។ ប្រសិនបើអ្នកមាន $1,000 ការខាតបង់ធំបំផុតក្នុងមួយ trade ត្រូវកម្រិតត្រឹម $10 ប៉ុណ្ណោះ។"
+          }
+        ],
+        diagram: `<svg viewBox="0 0 400 180" class="w-full h-40 bg-black/40 rounded-xl border border-white/5">
+          <rect x="50" y="70" width="80" height="40" fill="rgba(239, 68, 68, 0.2)" stroke="#EF4444" />
+          <text x="90" y="95" fill="#EF4444" font-size="10" text-anchor="middle">RISK: 1% ($10)</text>
+          
+          <rect x="200" y="50" width="150" height="80" fill="rgba(16, 185, 129, 0.2)" stroke="#10B981" />
+          <text x="275" y="95" fill="#10B981" font-size="10" text-anchor="middle">REWARD: 3% ($30)</text>
+        </svg>`,
+        caption: "ការបែងចែក Risk-to-Reward Ratio 1:3 ដ៏មានប្រសិទ្ធិភាព",
+        quiz: {
+          question: "បើគណនីមាន $10,000 តើ Risk 1% ស្មើនឹងទឹកប្រាក់ប៉ុន្មាន?",
+          options: ["$10", "$100", "$1,000", "$50"],
+          answer: 1
+        }
+      },
+      {
+        id: "l24",
+        num: "មេរៀនទី ២៤",
+        title: "Trading Psychology (ចិត្តសាស្ត្រ)",
+        category: "risk",
+        meta: "PSYCHOLOGICAL MASTERCLASS",
+        summary: "របៀបគ្រប់គ្រងអារម្មណ៍ ភាពភ័យខ្លាច និងភាពលោភលន់",
+        sections: [
+          {
+            subtitle: "សត្រូវធំទាំងបីរបស់ Trader",
+            content: "សត្រូវធំបំផុតរបស់ Trader គឺ៖ Fear (ការភ័យខ្លាច), Greed (ភាពលោភលន់ចង់មានភ្លាមៗ) និង FOMO (អារម្មណ៍ខ្លាចហួសឱកាស)។ ការគ្រប់គ្រងចិត្តសាស្ត្រល្អស្មើនឹង ៥០% នៃភាពជោគជ័យ។"
+          }
+        ],
+        diagram: `<svg viewBox="0 0 400 180" class="w-full h-40 bg-black/40 rounded-xl border border-white/5">
+          <circle cx="200" cy="90" r="50" fill="none" stroke="#FFD700" stroke-width="5" stroke-dasharray="10, 5" />
+          <text x="200" y="95" fill="#FFD700" text-anchor="middle" font-weight="bold" font-size="11">PSYCHOLOGY: 55%</text>
+        </svg>`,
+        caption: "ចិត្តសាស្ត្រជួញដូររួមចំណែកធំបំផុតដល់លទ្ធផលនៃការ Trade",
+        quiz: {
+          question: "តើអារម្មណ៍មួយណាដែលជំរុញឱ្យ Trader ចូលលេងដោយមិនមានការវិភាគត្រឹមត្រូវ?",
+          options: ["ភាពអត់ធ្មត់", "FOMO និង ភាពលោភលន់ (Greed)", "វិន័យ", "គ្មានចម្លើយត្រឹមត្រូវ"],
+          answer: 1
+        }
+      },
+      {
+        id: "l25",
+        num: "មេរៀនទី ២៥",
+        title: "Trading Journal (កត់ត្រាប្រតិបត្តិការ)",
+        category: "risk",
+        meta: "TRADE JOURNALING",
+        summary: "សារៈសំខាន់នៃការកត់ត្រារាល់ការចូលទិញលក់ដើម្បីកែលម្អខ្លួន",
+        sections: [
+          {
+            subtitle: "សៀវភៅកត់ត្រាជួញដូរ",
+            content: "ការកត់ត្រា Journal នូវរាល់មូលហេតុនៃការចូល Trade រូបភាពបច្ចេកទេស ចំនួនទឹកប្រាក់ចំណេញខាត ជួយឱ្យយើងមើលឃើញពីកំហុសឆ្គង និងកែលម្អយុទ្ធសាស្ត្ររបស់យើងជាប្រចាំ។"
+          }
+        ],
+        diagram: `<svg viewBox="0 0 400 180" class="w-full h-40 bg-black/40 rounded-xl border border-white/5">
+          <rect x="80" y="30" width="240" height="120" rx="6" fill="none" stroke="#FFD700" stroke-width="1.5" />
+          <text x="100" y="60" fill="#9CA3AF" font-size="9">✓ Date: 2026-06-26</text>
+          <text x="100" y="80" fill="#9CA3AF" font-size="9">✓ Pair: XAUUSD (Gold)</text>
+          <text x="100" y="100" fill="#9CA3AF" font-size="9">✓ Strategy: SMC Order Block + FVG</text>
+          <text x="100" y="120" fill="#10B981" font-size="9">✓ Result: Win (+3%)</text>
+        </svg>`,
+        caption: "គំរូបញ្ជីកត់ត្រាប្រតិបត្តិការជួញដូរ XAUUSD",
+        quiz: {
+          question: "ហេតុអ្វីបានជាយើងចាំបាច់ត្រូវកត់ត្រា Trading Journal?",
+          options: ["ដើម្បីបង្ហាញអ្នកដទៃ", "ដើម្បីកែលម្អកំហុសឆ្គង និងអភិវឌ្ឍជំនាញឱ្យប្រសើរឡើង", "គ្មានប្រយោជន៍អ្វីឡើយ", "គ្មានចម្លើយត្រឹមត្រូវ"],
+          answer: 1
+        }
+      }
+    ];
+
+    // Blog Articles database
+    const blogData = [
+      {
+        title: "វិភាគតម្លៃមាសប្រចាំថ្ងៃ៖ តើតម្លៃអាចឡើងដល់ $2,400 ដែរឬទេ?",
+        date: "2026-06-26",
+        summary: "មាសកំពុងបង្កើតរចនាសម្ព័ន្ធ Bullish Order Block លើ Timeframe H4។ មកមើលចំណុច OTE និងតំបន់ Liquidity បន្ទាប់...",
+        image: "https://images.unsplash.com/photo-1610375461246-83df859d8222?auto=format&fit=crop&w=400&q=80"
+      },
+      {
+        title: "របៀបការពារគណនីជួញដូរ Forex ក្នុងអំឡុងពេលព័ត៌មានលឿន CPI/NFP",
+        date: "2026-06-25",
+        summary: "សៀវភៅណែនាំអំពីរបៀបកំណត់ Risk ត្រឹមតែ 0.5% ឬឈប់ជួញដូរនៅពេលមានព័ត៌មានសេដ្ឋកិច្ចអាមេរិកខ្លាំង...",
+        image: "https://images.unsplash.com/photo-1590283603385-17ffb3a7f29f?auto=format&fit=crop&w=400&q=80"
+      }
+    ];
+
+    // Downloads resources database
+    const downloadsData = [
+      {
+        title: "សៀវភៅអេឡិចត្រូនិច SMC Complete Guide (Khmer)",
+        type: "PDF EBOOK",
+        desc: "មគ្គុទ្ទេសក៍សិក្សាអំពី Smart Money Concepts លម្អិតជាភាសាខ្មែរ (៨០ ទំព័រ)។",
+        size: "12.4 MB"
+      },
+      {
+        title: "គំរូ Excel Trading Journal & Risk Matrix",
+        type: "EXCEL FILE",
+        desc: "គំរូបញ្ជីកត់ត្រា និងគណនាភាគរយហានិភ័យគណនីស្វ័យប្រវត្ត។",
+        size: "2.1 MB"
+      },
+      {
+        title: "MT5 Session Clock & Killzone Indicator",
+        type: "INDICATOR",
+        desc: "សូចនាករសម្រាប់បង្ហាញពេលវេលា Killzone អាស៊ី ឡុងដ៍ ញូយ៉ក លើ چارត MT5។",
+        size: "350 KB"
+      }
+    ];
+
+    // Forum Comments Mock database
+    let forumComments = [
+      {
+        author: "សុខ ជា",
+        time: "10 នាទីមុន",
+        text: "តើ EURUSD លើ H1 កំពុងតែ sweep Equal Lows មែនទេបងៗ? ខ្ញុំឃើញវាទម្លុះបាតចាស់បន្តិច រួចបន្សល់កន្ទុយទានវែងឡើងលើវិញ។",
+        likes: 4,
+        replies: [
+          { author: "SMC KH Coach", text: "ត្រឹមត្រូវហើយប្អូន! នេះជា SSL Sweep ដ៏ច្បាស់។ បើមាន CHoCH លើ M5 ប្អូនអាចរកឱកាសចូល Buy បាន។" }
+        ]
+      },
+      {
+        author: "ចាន់ ធារី",
+        time: "1 ម៉ោងមុន",
+        text: "មេរៀនទី ១៣ អំពី Order Block ងាយយល់ខ្លាំងណាស់បង! អរគុណសាលា SMC KH ដែលបង្កើតមេរៀនល្អៗបែបនេះ។",
+        likes: 12,
+        replies: []
+      }
+    ];
+
+    // Router View Switcher
+    function switchView(viewId) {
+      // Hide all panels
+      document.querySelectorAll('.view-panel').forEach(p => p.classList.add('hidden'));
+      
+      // Remove active navigation state
+      document.querySelectorAll('nav button').forEach(b => b.classList.remove('active-tab'));
+      
+      // Show active panel
+      const activePanel = document.getElementById('view-' + viewId);
+      if (activePanel) {
+        activePanel.classList.remove('hidden');
+        // trigger animation
+        activePanel.classList.remove('view-enter-active');
+        activePanel.classList.add('view-enter');
+        setTimeout(() => {
+          activePanel.classList.add('view-enter-active');
+        }, 50);
+      }
+
+      // Add active state to nav button
+      const navBtn = document.getElementById('nav-' + viewId);
+      if (navBtn) {
+        navBtn.classList.add('active-tab');
+      }
+
+      // Initialize special view logic
+      if (viewId === 'lessons') {
+        renderLessonsSidebar();
+        selectLessonByIndex(0);
+      } else if (viewId === 'dashboard') {
+        renderDashboardCompletions();
+      }
+    }
+
+    // Dynamic rendering of courses
+    function renderCourses() {
+      const targetGrid = document.getElementById('courses-list-grid');
+      const landingGrid = document.getElementById('landing-courses-grid');
+      if (!targetGrid) return;
+
+      targetGrid.innerHTML = '';
+      if (landingGrid) landingGrid.innerHTML = '';
+
+      coursesData.forEach((course, idx) => {
+        const cardHTML = `
+          <div class="glass-card rounded-2xl overflow-hidden flex flex-col h-full shadow-lg">
+            <div class="h-44 w-full bg-cover bg-center relative" style="background-image: url('${course.image}')">
+              <div class="absolute inset-0 bg-black/30"></div>
+              <span class="absolute top-3 left-3 px-2 py-0.5 bg-primary/20 text-primary border border-primary/30 text-[9px] font-bold tracking-wider rounded uppercase">${course.level}</span>
+            </div>
+            <div class="p-5 flex-grow flex flex-col gap-3 text-left">
+              <span class="text-[10px] text-gray-500 font-bold uppercase tracking-wider flex items-center gap-1">
+                <i data-lucide="clock" class="w-3.5 h-3.5"></i> ${course.duration} • <i data-lucide="star" class="w-3.5 h-3.5 fill-primary text-primary"></i> ${course.rating}
+              </span>
+              <h3 class="text-base font-bold text-white leading-tight">${course.title}</h3>
+              <p class="text-xs text-gray-400 line-clamp-3 leading-relaxed">${course.desc}</p>
+            </div>
+            <div class="p-4 bg-white/2 border-t border-white/5 flex items-center justify-between">
+              <span class="text-sm font-black text-primary">${course.price}</span>
+              <button onclick="viewCourseDetails(${idx})" class="px-4 py-2 rounded-lg bg-primary text-black font-extrabold text-xs hover:scale-105 active:scale-95 transition-all">
+                មើលព័ត៌មាន
+              </button>
+            </div>
+          </div>
+        `;
+
+        targetGrid.innerHTML += cardHTML;
+
+        // Populate top 3 on landing page
+        if (landingGrid && idx < 3) {
+          landingGrid.innerHTML += cardHTML;
+        }
+      });
+      lucide.createIcons();
+    }
+
+    // View Course Details Modal
+    function viewCourseDetails(idx) {
+      activeCourseIndex = idx;
+      const course = coursesData[idx];
+      document.getElementById('modal-course-banner').style.backgroundImage = `url('${course.image}')`;
+      document.getElementById('modal-course-title').textContent = course.title;
+      document.getElementById('modal-course-desc').textContent = course.desc;
+      document.getElementById('modal-course-duration').textContent = course.duration;
+      document.getElementById('modal-course-rating').textContent = '★ ' + course.rating;
+      document.getElementById('modal-course-price').textContent = course.price;
+      document.getElementById('modal-course-badge').textContent = course.level;
+
+      const curriculumBox = document.getElementById('modal-course-curriculum');
+      curriculumBox.innerHTML = '';
+      
+      course.lessons.forEach((lessonId, lIdx) => {
+        const lesson = lessonsData.find(l => l.id === lessonId);
+        if (lesson) {
+          curriculumBox.innerHTML += `
+            <div class="flex items-center justify-between p-2.5 rounded-lg bg-white/3 border border-white/5 text-xs text-gray-300">
+              <span class="font-semibold">${lIdx + 1}. ${lesson.title}</span>
+              <span class="text-[9px] font-bold text-primary uppercase">${lesson.category}</span>
+            </div>
+          `;
+        }
+      });
+
+      document.getElementById('course-detail-modal').classList.remove('hidden');
+    }
+
+    function closeCourseModal() {
+      document.getElementById('course-detail-modal').classList.add('hidden');
+    }
+
+    function startCourseFromModal() {
+      closeCourseModal();
+      const course = coursesData[activeCourseIndex];
+      if (course && course.lessons.length > 0) {
+        switchView('lessons');
+        const firstLessonId = course.lessons[0];
+        const lessonIdx = lessonsData.findIndex(l => l.id === firstLessonId);
+        if (lessonIdx !== -1) {
+          selectLessonByIndex(lessonIdx);
+        }
+      }
+    }
+
+    // ==========================================
+    // LESSONS RENDERER SYSTEM
+    // ==========================================
+    let activeLessonIndex = 0;
+    let selectedCategoryFilter = 'all';
+
+    function renderLessonsSidebar() {
+      const listTree = document.getElementById('lessons-list-tree');
+      if (!listTree) return;
+      listTree.innerHTML = '';
+
+      const searchInput = document.getElementById('lesson-search');
+      const query = (searchInput ? searchInput.value : '').toLowerCase();
+
+      lessonsData.forEach((lesson, idx) => {
+        // filter category
+        if (selectedCategoryFilter !== 'all' && lesson.category !== selectedCategoryFilter) return;
+        // filter search query
+        if (query && !lesson.title.toLowerCase().includes(query) && !lesson.num.toLowerCase().includes(query)) return;
+
+        const isCompleted = completedLessons.includes(lesson.id);
+        const isActive = activeLessonIndex === idx;
+
+        listTree.innerHTML += `
+          <button onclick="selectLessonByIndex(${idx})" class="w-full text-left p-3 rounded-xl transition-all duration-200 flex items-center justify-between gap-3 border ${isActive ? 'active-tab border-primary/20' : 'bg-white/3 hover:bg-white/5 border-white/5'}">
+            <div class="flex flex-col gap-1 overflow-hidden">
+              <span class="text-[8px] font-bold text-primary uppercase tracking-wider">${lesson.num}</span>
+              <span class="text-xs font-bold text-white truncate">${lesson.title}</span>
+            </div>
+            <div class="w-4 h-4 rounded-full border-2 ${isCompleted ? 'bg-green-500 border-green-500 text-black' : 'border-gray-500'} flex items-center justify-center text-[8px] font-black">
+              ${isCompleted ? '✓' : ''}
+            </div>
+          </button>
+        `;
+      });
+    }
+
+    function selectLessonByIndex(idx) {
+      activeLessonIndex = idx;
+      const lesson = lessonsData[idx];
+      if (!lesson) return;
+
+      // Update active state in sidebar
+      renderLessonsSidebar();
+
+      // Render viewer content
+      const viewer = document.getElementById('lesson-viewer-body');
+      const isBookmarked = bookmarkedLessons.includes(lesson.id);
+
+      let sectionsHTML = '';
+      lesson.sections.forEach(sec => {
+        sectionsHTML += `
+          <div class="lesson-section">
+            <h3 class="text-base font-bold text-white flex items-center gap-2">
+              <i data-lucide="sparkles" class="w-4.5 h-4.5 text-primary"></i> ${sec.subtitle}
+            </h3>
+            <p class="text-sm text-gray-300 leading-relaxed mt-2">${sec.content}</p>
+          </div>
+        `;
+      });
+
+      // Quiz interface inline below lesson content
+      const isCompleted = completedLessons.includes(lesson.id);
+      
+      viewer.innerHTML = `
+        <div class="flex flex-col gap-2">
+          <div class="flex items-center justify-between text-xs font-bold uppercase tracking-widest text-primary">
+            <span>${lesson.num} • ${lesson.meta}</span>
+            <div class="flex items-center gap-2">
+              <button onclick="toggleBookmark('${lesson.id}')" class="p-2 rounded-lg bg-white/5 hover:bg-white/10 transition-all border border-white/10">
+                <i data-lucide="bookmark" class="w-4 h-4 ${isBookmarked ? 'fill-primary text-primary' : 'text-gray-400'}"></i>
+              </button>
+              <button onclick="shareLesson('${lesson.title}')" class="p-2 rounded-lg bg-white/5 hover:bg-white/10 transition-all border border-white/10">
+                <i data-lucide="share-2" class="w-4 h-4 text-gray-400"></i>
+              </button>
+            </div>
+          </div>
+          <h1 class="text-3xl font-black text-white">${lesson.title}</h1>
+        </div>
+
+        <div class="p-4 bg-primary/5 border border-primary/10 rounded-xl text-xs text-primary leading-relaxed">
+          <strong>សង្ខេបមេរៀន / Summary:</strong> ${lesson.summary}
+        </div>
+
+        <div class="flex flex-col gap-6">
+          ${sectionsHTML}
+        </div>
+
+        <!-- SVG Illustration -->
+        <div class="lesson-diagram-box">
+          ${lesson.diagram}
+          <div class="lesson-diagram-caption">${lesson.caption}</div>
+        </div>
+
+        <!-- Inline Quiz Card -->
+        <div class="glass-card p-6 rounded-2xl flex flex-col gap-4 text-left border-primary/10 ${isCompleted ? 'border-green-500/30 bg-green-500/3' : ''}" id="inline-quiz-box">
+          <h3 class="text-sm font-bold text-primary uppercase tracking-widest border-b border-white/5 pb-2 flex items-center justify-between">
+            <span>📝 សំណួរវាស់ស្ទង់ / Lesson Knowledge Check</span>
+            ${isCompleted ? '<span class="text-xs text-green-400 font-extrabold flex items-center gap-1">✓ Completed</span>' : ''}
+          </h3>
+          <p class="text-sm font-bold mt-1">${lesson.quiz.question}</p>
+          
+          <div class="flex flex-col gap-2 mt-2">
+            ${lesson.quiz.options.map((opt, oIdx) => {
+              return `
+                <button onclick="answerInlineQuiz(${oIdx}, ${lesson.quiz.answer}, '${lesson.id}')" class="quiz-opt p-3 rounded-xl text-xs font-semibold text-gray-300 text-left transition-all ${isCompleted && oIdx === lesson.quiz.answer ? 'quiz-correct text-white font-bold' : ''}">
+                  ${oIdx + 1}. ${opt}
+                </button>
+              `;
+            }).join('')}
+          </div>
+        </div>
+
+        <!-- Navigation Buttons -->
+        <div class="flex items-center justify-between border-t border-white/5 pt-6 mt-4">
+          <button onclick="navigateLessons(-1)" ${idx === 0 ? 'disabled' : ''} class="px-4 py-2 rounded-lg bg-white/5 border border-white/10 hover:bg-white/10 text-white font-bold text-xs transition-all disabled:opacity-30 disabled:cursor-not-allowed">
+            ← Previous Lesson
+          </button>
+          <button onclick="navigateLessons(1)" ${idx === lessonsData.length - 1 ? 'disabled' : ''} class="px-4 py-2 rounded-lg bg-primary hover:bg-accent text-black font-extrabold text-xs transition-all disabled:opacity-30 disabled:cursor-not-allowed">
+            Next Lesson →
+          </button>
+        </div>
+      `;
+
+      lucide.createIcons();
+    }
+
+    function filterCategory(cat) {
+      selectedCategoryFilter = cat;
+      
+      // Update filter tabs UI
+      ['all', 'basic', 'smc', 'risk'].forEach(c => {
+        const btn = document.getElementById('cat-' + c);
+        if (btn) {
+          if (c === cat) {
+            btn.className = "px-2.5 py-1 rounded-full bg-primary/10 border border-primary/20 text-[10px] font-bold text-primary whitespace-nowrap";
+          } else {
+            btn.className = "px-2.5 py-1 rounded-full bg-white/5 border border-white/5 text-[10px] font-bold text-gray-400 whitespace-nowrap";
+          }
+        }
+      });
+
+      renderLessonsSidebar();
+    }
+
+    function filterLessons() {
+      renderLessonsSidebar();
+    }
+
+    function navigateLessons(dir) {
+      const nextIdx = activeLessonIndex + dir;
+      if (nextIdx >= 0 && nextIdx < lessonsData.length) {
+        selectLessonByIndex(nextIdx);
+      }
+    }
+
+    function toggleBookmark(lessonId) {
+      if (bookmarkedLessons.includes(lessonId)) {
+        bookmarkedLessons = bookmarkedLessons.filter(id => id !== lessonId);
+        showToast('បានដកចេញពីកំណត់ចំណាំ');
+      } else {
+        bookmarkedLessons.push(lessonId);
+        showToast('បានរក្សាទុកក្នុងកំណត់ចំណាំ');
+      }
+      try {
+        localStorage.setItem('bookmarked_lessons', JSON.stringify(bookmarkedLessons));
+      } catch (e) {
+        console.warn("Could not save bookmarked_lessons to localStorage:", e);
+      }
+      selectLessonByIndex(activeLessonIndex);
+    }
+
+    function shareLesson(title) {
+      navigator.clipboard.writeText(window.location.href);
+      showToast('ចម្លងតំណភ្ជាប់មេរៀន "' + title + '" រួចរាល់!');
+    }
+
+    function answerInlineQuiz(chosenIdx, correctIdx, lessonId) {
+      if (completedLessons.includes(lessonId)) return; // already completed
+
+      const optionsBox = document.getElementById('inline-quiz-box');
+      const buttons = optionsBox.querySelectorAll('button');
+
+      if (chosenIdx === correctIdx) {
+        buttons[chosenIdx].classList.add('quiz-correct');
+        showToast('ត្រឹមត្រូវល្អណាស់! មេរៀននេះត្រូវបានបញ្ចប់។');
+        
+        // Save completion
+        completedLessons.push(lessonId);
+        try {
+          localStorage.setItem('completed_lessons', JSON.stringify(completedLessons));
+        } catch (e) {
+          console.warn("Could not save completed_lessons to localStorage:", e);
+        }
+        
+        // Update achievements progress
+        updateAchievements();
+
+        // Refresh UI
+        setTimeout(() => {
+          selectLessonByIndex(activeLessonIndex);
+        }, 1500);
+      } else {
+        buttons[chosenIdx].classList.add('quiz-incorrect');
+        showToast('ចម្លើយខុសហើយ! សូមសាកល្បងម្ដងទៀត។');
+      }
+    }
+
+    // ==========================================
+    // ACTIVE QUIZ CENTER SYSTEM
+    // ==========================================
+    let activeQuizQuestions = [];
+    let currentQuizIndex = 0;
+    let quizScore = 0;
+    let quizTimerInterval;
+    let quizTimeLeft = 30;
+    let chosenQuizAnswerIndex = null;
+
+    function startActiveQuiz() {
+      // Pick all questions from lessonsData
+      activeQuizQuestions = lessonsData.map(l => {
+        return {
+          question: l.quiz.question,
+          options: l.quiz.options,
+          answer: l.quiz.answer,
+          lessonTitle: l.title
+        }
+      });
+
+      // Reset states
+      currentQuizIndex = 0;
+      quizScore = 0;
+      chosenQuizAnswerIndex = null;
+
+      document.getElementById('quiz-welcome-screen').classList.add('hidden');
+      document.getElementById('quiz-active-interface').classList.remove('hidden');
+      document.getElementById('quiz-completed-screen').classList.add('hidden');
+
+      loadQuizQuestion();
+    }
+
+    function loadQuizQuestion() {
+      if (currentQuizIndex >= activeQuizQuestions.length) {
+        completeQuizProcess();
+        return;
+      }
+
+      chosenQuizAnswerIndex = null;
+      const q = activeQuizQuestions[currentQuizIndex];
+
+      // Question count & Progress
+      document.getElementById('quiz-question-number').textContent = `សំណួរទី ${currentQuizIndex + 1} / ${activeQuizQuestions.length}`;
+      const percent = Math.round((currentQuizIndex / activeQuizQuestions.length) * 100);
+      document.getElementById('quiz-percentage-text').textContent = `${percent}% Completed`;
+      document.getElementById('quiz-progressbar-fill').style.width = `${percent}%`;
+
+      // Set titles
+      document.getElementById('quiz-question-title').textContent = q.question;
+
+      // Render options
+      const optBox = document.getElementById('quiz-options-box');
+      optBox.innerHTML = '';
+
+      q.options.forEach((opt, oIdx) => {
+        optBox.innerHTML += `
+          <button onclick="selectQuizOption(${oIdx})" id="quiz-opt-btn-${oIdx}" class="quiz-opt p-3.5 rounded-xl text-xs font-semibold text-gray-300 text-left transition-all bg-white/2 border border-white/5">
+            ${oIdx + 1}. ${opt}
+          </button>
+        `;
+      });
+
+      // Reset timer
+      clearInterval(quizTimerInterval);
+      quizTimeLeft = 30;
+      document.getElementById('quiz-timer-text').textContent = `${quizTimeLeft}s`;
+      
+      quizTimerInterval = setInterval(() => {
+        quizTimeLeft--;
+        document.getElementById('quiz-timer-text').textContent = `${quizTimeLeft}s`;
+        if (quizTimeLeft <= 0) {
+          clearInterval(quizTimerInterval);
+          submitQuizAnswer(); // auto submit when time runs out
+        }
+      }, 1000);
+
+      // Disable submit button
+      const submitBtn = document.getElementById('btn-quiz-submit');
+      submitBtn.disabled = true;
+      submitBtn.className = "px-6 py-3 bg-white/5 border border-white/10 text-gray-500 font-bold rounded-xl cursor-not-allowed";
+    }
+
+    function selectQuizOption(idx) {
+      chosenQuizAnswerIndex = idx;
+      
+      // Reset active styles
+      const optionsBox = document.getElementById('quiz-options-box');
+      optionsBox.querySelectorAll('button').forEach(btn => btn.classList.remove('selected', 'border-primary', 'bg-primary/5'));
+
+      // Highlight selected
+      const activeBtn = document.getElementById('quiz-opt-btn-' + idx);
+      if (activeBtn) {
+        activeBtn.classList.add('selected', 'border-primary', 'bg-primary/5');
+      }
+
+      // Enable submit
+      const submitBtn = document.getElementById('btn-quiz-submit');
+      submitBtn.disabled = false;
+      submitBtn.className = "px-6 py-3 bg-gradient-to-r from-primary to-accent text-black font-extrabold rounded-xl hover:scale-105 active:scale-95 transition-all shadow-[0_4px_10px_rgba(255,215,0,0.2)]";
+    }
+
+    function submitQuizAnswer() {
+      clearInterval(quizTimerInterval);
+
+      const q = activeQuizQuestions[currentQuizIndex];
+      const optBox = document.getElementById('quiz-options-box');
+      const buttons = optBox.querySelectorAll('button');
+
+      // Highlight correct & incorrect answers
+      if (chosenQuizAnswerIndex !== null) {
+        if (chosenQuizAnswerIndex === q.answer) {
+          buttons[chosenQuizAnswerIndex].classList.add('quiz-correct');
+          quizScore++;
+        } else {
+          buttons[chosenQuizAnswerIndex].classList.add('quiz-incorrect');
+          buttons[q.answer].classList.add('quiz-correct');
+        }
+      } else {
+        // time ran out
+        buttons[q.answer].classList.add('quiz-correct');
+      }
+
+      // Move to next question after 1.5s delay
+      setTimeout(() => {
+        currentQuizIndex++;
+        loadQuizQuestion();
+      }, 1500);
+    }
+
+    function completeQuizProcess() {
+      document.getElementById('quiz-active-interface').classList.add('hidden');
+      document.getElementById('quiz-completed-screen').classList.remove('hidden');
+
+      const totalQs = activeQuizQuestions.length;
+      const scorePercent = Math.round((quizScore / totalQs) * 100);
+      document.getElementById('completed-score-text').textContent = `${quizScore} / ${totalQs} (${scorePercent}%)`;
+
+      // Set certificate dates and student names
+      document.getElementById('cert-student-name').textContent = document.getElementById('user-display-name').textContent;
+      const today = new Date().toISOString().split('T')[0];
+      document.getElementById('cert-date').textContent = today;
+    }
+
+    // ==========================================
+    // TRADING TOOLS CALCULATORS
+    // ==========================================
+    function calculateToolsLot() {
+      const bal = parseFloat(document.getElementById('tools-bal').value) || 0;
+      const risk = parseFloat(document.getElementById('tools-risk').value) || 0;
+      const sl = parseFloat(document.getElementById('tools-sl').value) || 0;
+      const rr = parseFloat(document.getElementById('tools-rr').value) || 0;
+
+      if (bal <= 0 || risk <= 0 || sl <= 0) {
+        document.getElementById('tools-result-lot').textContent = '0.00 Lot';
+        document.getElementById('tools-result-risk-cash').textContent = '$0.00';
+        document.getElementById('tools-result-reward-cash').textContent = '$0.00';
+        return;
+      }
+
+      const riskCash = bal * (risk / 100);
+      const lot = riskCash / (sl * 10);
+      const rewardCash = riskCash * rr;
+
+      document.getElementById('tools-result-lot').textContent = lot.toFixed(2) + ' Lot';
+      document.getElementById('tools-result-risk-cash').textContent = '$' + riskCash.toFixed(2);
+      document.getElementById('tools-result-reward-cash').textContent = '$' + rewardCash.toFixed(2);
+    }
+
+    // Clock and active sessions manager
+    function updateClocks() {
+      const d = new Date();
+      const utcHour = d.getUTCHours();
+
+      // Tokyo open: 00:00 - 09:00 UTC (07:00 - 16:00 Cambodian time)
+      const tokyoOpen = utcHour >= 0 && utcHour < 9;
+      // London open: 08:00 - 16:00 UTC (15:00 - 23:00 Cambodian time)
+      const londonOpen = utcHour >= 8 && utcHour < 16;
+      // New York open: 13:00 - 21:00 UTC (20:00 - 04:00 Cambodian time)
+      const nyOpen = utcHour >= 13 && utcHour < 21;
+
+      setSessionStatus('session-tokyo', tokyoOpen);
+      setSessionStatus('session-london', londonOpen);
+      setSessionStatus('session-ny', nyOpen);
+    }
+
+    function setSessionStatus(elementId, isOpen) {
+      const badge = document.getElementById(elementId);
+      if (!badge) return;
+
+      if (isOpen) {
+        badge.textContent = "OPEN / កំពុងដំណើរការ";
+        badge.className = "px-2 py-0.5 rounded text-[10px] font-black uppercase bg-green-500/10 text-green-400";
+      } else {
+        badge.textContent = "CLOSED / សម្រាក";
+        badge.className = "px-2 py-0.5 rounded text-[10px] font-black uppercase bg-red-500/10 text-red-500";
+      }
+    }
+
+    // Run clock updates
+    setInterval(updateClocks, 10000);
+    updateClocks();
+    calculateToolsLot();
+
+    // ==========================================
+    // STUDENT & ADMIN DASHBOARDS
+    // ==========================================
+    function renderDashboardCompletions() {
+      document.getElementById('dashboard-completions-count').textContent = `${completedLessons.length} / ${lessonsData.length}`;
+      document.getElementById('leaderboard-student-lessons').textContent = `(${completedLessons.length}/26)`;
+      
+      const percent = Math.round((completedLessons.length / lessonsData.length) * 100);
+      document.getElementById('leaderboard-student-percent').textContent = `${percent}%`;
+
+      const listContainer = document.getElementById('dashboard-completions-list');
+      listContainer.innerHTML = '';
+
+      if (completedLessons.length === 0) {
+        listContainer.innerHTML = `<div class="text-xs text-gray-500 italic">មិនទាន់មានមេរៀនដែលបានបញ្ចប់នៅឡើយទេ។ សូមចូលទៅកាន់ទំព័រ Lessons ដើម្បីចាប់ផ្ដើមការសិក្សា!</div>`;
+        return;
+      }
+
+      completedLessons.forEach((lessonId, idx) => {
+        const lesson = lessonsData.find(l => l.id === lessonId);
+        if (lesson) {
+          listContainer.innerHTML += `
+            <div class="flex items-center justify-between p-3 rounded-xl bg-white/2 border border-white/5 text-xs">
+              <div class="flex flex-col gap-0.5">
+                <span class="font-bold text-white">${idx + 1}. ${lesson.title}</span>
+                <span class="text-[9px] text-gray-500">${lesson.num} • ${lesson.meta}</span>
+              </div>
+              <span class="px-2 py-0.5 bg-green-500/10 text-green-400 rounded-md font-bold text-[9px] uppercase">COMPLETED</span>
+            </div>
+          `;
+        }
+      });
+    }
+
+    function updateAchievements() {
+      const first = document.getElementById('badge-first-lesson');
+      const master = document.getElementById('badge-smc-master');
+      const grad = document.getElementById('badge-graduated');
+
+      if (completedLessons.length >= 1 && first) {
+        first.classList.remove('opacity-40');
+        first.classList.add('border-primary/20', 'bg-primary/5');
+      }
+      if (completedLessons.length >= 15 && master) {
+        master.classList.remove('opacity-40');
+        master.classList.add('border-primary/20', 'bg-primary/5');
+      }
+      if (completedLessons.length >= 26 && grad) {
+        grad.classList.remove('opacity-40');
+        grad.classList.add('border-primary/20', 'bg-primary/5');
+      }
+    }
+
+    // Backtest simulator triggers in Admin tab
+    let backtestChart = null;
+
+    function runAdminBacktest() {
+      const sym = document.getElementById('admin-symbol').value;
+      const per = document.getElementById('admin-period').value;
+      const inter = document.getElementById('admin-interval').value;
+
+      document.getElementById('admin-results-placeholder').classList.add('hidden');
+      document.getElementById('admin-results-loading').classList.remove('hidden');
+      document.getElementById('admin-results-content').classList.add('hidden');
+
+      fetch(BACKEND + '/train', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          symbol: sym,
+          period: per,
+          interval: inter,
+          model_type: 'rf',
+          rf_trees: 100,
+          test_split: 0.2,
+          features: ['sma', 'ema', 'rsi', 'macd', 'bb']
+        })
+      })
+      .then(res => res.json())
+      .then(data => {
+        document.getElementById('admin-results-loading').classList.add('hidden');
+        document.getElementById('admin-results-content').classList.remove('hidden');
+
+        // Update statistics indicators
+        document.getElementById('admin-stat-winrate').textContent = (data.metrics.win_rate).toFixed(1) + '%';
+        document.getElementById('admin-stat-return').textContent = (data.metrics.strategy_return).toFixed(1) + '%';
+        document.getElementById('admin-stat-sharpe').textContent = (data.metrics.sharpe).toFixed(2);
+        document.getElementById('admin-stat-accuracy').textContent = (data.metrics.test_acc).toFixed(1) + '%';
+
+        // Signal Alert
+        const trades = data.trades;
+        if (trades.length > 0) {
+          const lastTrade = trades[trades.length - 1];
+          const direction = lastTrade.type.toUpperCase();
+          const entry = lastTrade.entry_price.toFixed(2);
+          const sl = lastTrade.sl.toFixed(2);
+          const tp = lastTrade.tp.toFixed(2);
+
+          const bannerText = document.getElementById('admin-signal-direction');
+          bannerText.textContent = direction;
+          if (direction === 'BUY') {
+            bannerText.className = "text-lg font-black text-green-400";
+          } else {
+            bannerText.className = "text-lg font-black text-red-400";
+          }
+          
+          document.getElementById('admin-signal-values').innerHTML = `
+            <span>Entry: <strong>$${entry}</strong></span><br>
+            <span>SL: <strong>$${sl}</strong> | TP: <strong>$${tp}</strong></span>
+          `;
+        }
+
+        // Render ChartJS
+        const ctx = document.getElementById('adminBacktestChart').getContext('2d');
+        if (backtestChart) backtestChart.destroy();
+
+        const dates = data.chart_data.map(d => d.date);
+        const prices = data.chart_data.map(d => d.price);
+        const strat = data.chart_data.map(d => d.strategy_cum);
+
+        backtestChart = new Chart(ctx, {
+          type: 'line',
+          data: {
+            labels: dates,
+            datasets: [
+              {
+                label: 'Asset Price ($)',
+                data: prices,
+                borderColor: '#FFD700',
+                borderWidth: 1.5,
+                yAxisID: 'y'
+              },
+              {
+                label: 'Strategy Cumulative Return',
+                data: strat,
+                borderColor: '#10B981',
+                borderWidth: 2,
+                yAxisID: 'y1'
+              }
+            ]
+          },
+          options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            scales: {
+              y: { position: 'left', grid: { color: 'rgba(255,255,255,0.03)' } },
+              y1: { position: 'right', grid: { drawOnChartArea: false } }
+            },
+            plugins: { legend: { labels: { color: '#FFF' } } }
+          }
+        });
+      })
+      .catch(err => {
+        document.getElementById('admin-results-loading').classList.add('hidden');
+        document.getElementById('admin-results-placeholder').classList.remove('hidden');
+        showToast('Backtest Failed: Server error');
+      });
+    }
+
+    // ==========================================
+    // COMMUNITY FORUM
+    // ==========================================
+    function renderForum() {
+      const stream = document.getElementById('forum-comments-stream');
+      if (!stream) return;
+      stream.innerHTML = '';
+
+      forumComments.forEach((post, pIdx) => {
+        let repliesHTML = '';
+        post.replies.forEach(rep => {
+          repliesHTML += `
+            <div class="mt-3 p-3 rounded-lg bg-primary/5 border border-primary/10 ml-6 text-xs text-left">
+              <div class="flex items-center justify-between font-bold text-primary mb-1">
+                <span>👨‍🏫 ${rep.author} <small class="text-gray-400 font-semibold">(Instructor)</small></span>
+              </div>
+              <p class="text-gray-300 leading-relaxed">${rep.text}</p>
+            </div>
+          `;
+        });
+
+        stream.innerHTML += `
+          <div class="glass-card p-5 rounded-2xl flex flex-col gap-3">
+            <div class="flex items-center justify-between text-xs font-bold">
+              <span class="text-white flex items-center gap-1.5"><i data-lucide="user" class="w-4 h-4 text-primary"></i> ${post.author}</span>
+              <span class="text-gray-500">${post.time}</span>
+            </div>
+            <p class="text-sm text-gray-300 leading-relaxed">${post.text}</p>
+            <div class="flex items-center gap-4 text-xs font-semibold mt-1">
+              <button onclick="likeForumPost(${pIdx})" class="text-gray-400 hover:text-primary transition-all flex items-center gap-1">
+                <i data-lucide="thumbs-up" class="w-4 h-4"></i> Likes (${post.likes})
+              </button>
+              <button onclick="openForumReplyModal(${pIdx})" class="text-gray-400 hover:text-primary transition-all flex items-center gap-1">
+                <i data-lucide="message-square" class="w-4 h-4"></i> Reply
+              </button>
+            </div>
+            ${repliesHTML}
+          </div>
+        `;
+      });
+      lucide.createIcons();
+    }
+
+    function postForumComment() {
+      const txt = document.getElementById('forum-input').value;
+      if (!txt.trim()) return;
+
+      forumComments.unshift({
+        author: document.getElementById('user-display-name').textContent,
+        time: "ទើបតែមុននេះ",
+        text: txt,
+        likes: 0,
+        replies: []
+      });
+
+      document.getElementById('forum-input').value = '';
+      renderForum();
+      showToast('បង្ហោះសំណួរទទួលបានជោគជ័យ');
+    }
+
+    function likeForumPost(idx) {
+      forumComments[idx].likes++;
+      renderForum();
+    }
+
+    function openForumReplyModal(idx) {
+      const text = prompt("សរសេរការឆ្លើយតបរបស់អ្នក / Enter your reply:");
+      if (!text || !text.trim()) return;
+
+      forumComments[idx].replies.push({
+        author: document.getElementById('user-display-name').textContent,
+        text: text
+      });
+      renderForum();
+      showToast('ការឆ្លើយតបត្រូវបានបង្ហោះ');
+    }
+
+    // ==========================================
+    // BLOG & DOWNLOADS LIBRARY
+    // ==========================================
+    function renderBlogAndDownloads() {
+      const blogGrid = document.getElementById('blog-articles-grid');
+      const downloadsGrid = document.getElementById('downloads-items-grid');
+
+      if (blogGrid) {
+        blogGrid.innerHTML = '';
+        blogData.forEach(art => {
+          blogGrid.innerHTML += `
+            <div class="glass-card rounded-2xl overflow-hidden flex flex-col shadow-md">
+              <div class="h-40 w-full bg-cover bg-center" style="background-image:url('${art.image}')"></div>
+              <div class="p-5 flex flex-col gap-2.5">
+                <span class="text-[10px] text-primary font-bold uppercase tracking-wider">${art.date} • DAILY ANALYSIS</span>
+                <h3 class="text-base font-bold text-white leading-tight">${art.title}</h3>
+                <p class="text-xs text-gray-400 line-clamp-3 leading-relaxed">${art.summary}</p>
+                <button onclick="showToast('អត្ថបទវិភាគពេញលេញនឹងដាក់ជូនអានឆាប់ៗនេះ')" class="text-xs text-primary font-bold hover:underline w-fit mt-1">អានអត្ថបទបន្ថែម →</button>
+              </div>
+            </div>
+          `;
+        });
+      }
+
+      if (downloadsGrid) {
+        downloadsGrid.innerHTML = '';
+        downloadsData.forEach(item => {
+          downloadsGrid.innerHTML += `
+            <div class="glass-card p-5 rounded-2xl flex flex-col gap-3 justify-between">
+              <div class="flex flex-col gap-2">
+                <span class="px-2 py-0.5 bg-primary/10 text-primary border border-primary/20 text-[9px] font-bold rounded w-fit uppercase">${item.type}</span>
+                <h3 class="text-sm font-bold text-white leading-tight">${item.title}</h3>
+                <p class="text-xs text-gray-400 leading-relaxed">${item.desc}</p>
+              </div>
+              <div class="flex items-center justify-between mt-3 pt-3 border-t border-white/5 text-xs text-gray-500 font-semibold">
+                <span>Size: ${item.size}</span>
+                <button onclick="showToast('កំពុងទាញយកឯកសារ...')" class="text-primary hover:underline flex items-center gap-1 text-[11px]">
+                  <i data-lucide="download" class="w-3.5 h-3.5"></i> Download
+                </button>
+              </div>
+            </div>
+          `;
+        });
+        lucide.createIcons();
+      }
+    }
+
+    // ==========================================
+    // FLOATING CHATBOT ENGINE
+    // ==========================================
+    function toggleChatbot() {
+      chatbotOpen = !chatbotOpen;
+      const chatPanel = document.getElementById('chatbot-float-panel');
+      if (chatbotOpen) {
+        chatPanel.classList.remove('translate-y-12', 'opacity-0', 'pointer-events-none');
+      } else {
+        chatPanel.classList.add('translate-y-12', 'opacity-0', 'pointer-events-none');
+      }
+    }
+
+    function handleChatKey(e) {
+      if (e.key === 'Enter') {
+        sendChatbotMessage();
+      }
+    }
+
+    function sendQuickQuestion(qText) {
+      document.getElementById('chat-input-field').value = qText;
+      sendChatbotMessage();
+    }
+
+    function sendChatbotMessage() {
+      const input = document.getElementById('chat-input-field');
+      const text = input.value;
+      if (!text.trim()) return;
+
+      input.value = '';
+
+      const box = document.getElementById('chat-messages-box');
+      
+      // Add User message
+      box.innerHTML += `
+        <div class="flex items-start gap-2.5 justify-end">
+          <div class="p-3 bg-primary text-black font-semibold rounded-l-xl rounded-br-xl text-left max-w-[80%] leading-relaxed shadow-sm">
+            ${text}
+          </div>
+        </div>
+      `;
+
+      // Scroll to bottom
+      box.scrollTop = box.scrollHeight;
+
+      // Add AI Typing message
+      const typingId = 'typing-' + Date.now();
+      box.innerHTML += `
+        <div class="flex items-start gap-2.5" id="${typingId}">
+          <div class="w-7 h-7 rounded-lg bg-gradient-to-br from-primary to-accent text-black font-extrabold flex items-center justify-center text-[10px]">
+            AI
+          </div>
+          <div class="p-3 bg-white/5 border border-white/10 rounded-r-xl rounded-bl-xl text-left max-w-[80%]">
+            <div class="typing flex gap-1.5 items-center py-1">
+              <span class="w-1.5 h-1.5 rounded-full bg-primary animate-bounce"></span>
+              <span class="w-1.5 h-1.5 rounded-full bg-primary animate-bounce" style="animation-delay:0.2s"></span>
+              <span class="w-1.5 h-1.5 rounded-full bg-primary animate-bounce" style="animation-delay:0.4s"></span>
+            </div>
+          </div>
+        </div>
+      `;
+      box.scrollTop = box.scrollHeight;
+
+      // Send to backend
+      fetch(BACKEND + '/chat', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          messages: [
+            { role: 'user', content: text }
+          ]
+        })
+      })
+      .then(res => res.json())
+      .then(data => {
+        // remove typing placeholder
+        document.getElementById(typingId).remove();
+
+        const reply = data.reply || data.content || "សុំទោស ខ្ញុំមិនអាចទាក់ទងទៅកាន់ម៉ាស៊ីន AI បានទេនៅពេលនេះ។";
+
+        box.innerHTML += `
+          <div class="flex items-start gap-2.5">
+            <div class="w-7 h-7 rounded-lg bg-gradient-to-br from-primary to-accent text-black font-extrabold flex items-center justify-center text-[10px]">
+              AI
+            </div>
+            <div class="p-3 bg-white/5 border border-white/10 rounded-r-xl rounded-bl-xl text-left max-w-[80%] leading-relaxed text-gray-200">
+              ${reply}
+            </div>
+          </div>
+        `;
+        box.scrollTop = box.scrollHeight;
+      })
+      .catch(err => {
+        document.getElementById(typingId).remove();
+        box.innerHTML += `
+          <div class="flex items-start gap-2.5">
+            <div class="w-7 h-7 rounded-lg bg-gradient-to-br from-primary to-accent text-black font-extrabold flex items-center justify-center text-[10px]">
+              AI
+            </div>
+            <div class="p-3 bg-red-500/10 border border-red-500/20 text-red-400 rounded-r-xl rounded-bl-xl text-left max-w-[80%]">
+              បរាជ័យក្នុងការភ្ជាប់ទៅកាន់ Server API។ សូមប្រាកដថា Python backend របស់អ្នកកំពុងដំណើរការ។
+            </div>
+          </div>
+        `;
+        box.scrollTop = box.scrollHeight;
+      });
+    }
+
+    // ==========================================
+    // TOAST NOTIFICATIONS
+    // ==========================================
+    function showToast(msg) {
+      const toast = document.getElementById('toast-notif');
+      const text = document.getElementById('toast-message');
+      
+      text.textContent = msg;
+      
+      toast.classList.remove('translate-x-20', 'opacity-0', 'pointer-events-none');
+      setTimeout(() => {
+        toast.classList.add('translate-x-20', 'opacity-0', 'pointer-events-none');
+      }, 3500);
+    }
+
+    // ==========================================
+    // INITIALIZATION ON LOAD
+    // ==========================================
+    window.onload = function() {
+      // Load initial templates
+      renderCourses();
+      renderForum();
+      renderBlogAndDownloads();
+      updateAchievements();
+
+      // Go to home landing
+      switchView('landing');
+    }
+  </script>
+</body>
+</html>
